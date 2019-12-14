@@ -1,42 +1,19 @@
 package com.cg.lms.dto;
 
-import java.util.List;
-
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 
 @Entity
-@SequenceGenerator(name = "book_seq", sequenceName = "BOOK_SEQ")
+@SequenceGenerator(name = "book_id_gen", sequenceName = "book_id_gen", allocationSize = 1)
 @NamedQuery(name = "findBookById", query = "FROM Book WHERE bookId =:bookId")
 public class Book {
-	
-	public Book() {
-		// TODO Auto-generated constructor stub
-	}
-	
-	public Book(String bookName, String bookGenre, double bookPrice, String iSBN, String bookStatus,
-			String bookAuthor, String bookDescription, int noOfPages, int noOfCopies) {
-		super();
-		this.bookName = bookName;
-		this.bookGenre = bookGenre;
-		this.bookPrice = bookPrice;
-		this.ISBN = iSBN;
-		this.bookStatus = bookStatus;
-		this.bookAuthor = bookAuthor;
-		this.bookDescription = bookDescription;
-		this.noOfPages = noOfPages;
-		this.noOfCopies = noOfCopies;
-	}
 
 	@Id
-	@GeneratedValue(generator = "book_seq")
+	@GeneratedValue(generator = "book_id_gen")
 	private int bookId;
 	@Column(length = 50)
 	private String bookName;
@@ -53,9 +30,6 @@ public class Book {
 	private String bookDescription;
 	private int noOfPages;
 	private int noOfCopies;
-	
-//	@OneToMany(mappedBy = "book")
-//	private List<Transactions> bookTransactions;
 
 	public int getBookId() {
 		return bookId;
@@ -136,13 +110,5 @@ public class Book {
 	public void setNoOfCopies(int noOfCopies) {
 		this.noOfCopies = noOfCopies;
 	}
-//
-//	public List<Transactions> getBookTransactions() {
-//		return bookTransactions;
-//	}
-//
-//	public void setBookTransactions(List<Transactions> bookTransactions) {
-//		this.bookTransactions = bookTransactions;
-//	}
 	
 }

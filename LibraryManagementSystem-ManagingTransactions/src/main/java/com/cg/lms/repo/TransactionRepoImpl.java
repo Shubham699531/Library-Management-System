@@ -2,7 +2,9 @@ package com.cg.lms.repo;
 
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import javax.persistence.EntityManager;
@@ -14,6 +16,7 @@ import org.springframework.stereotype.Repository;
 import com.cg.lms.dto.Book;
 import com.cg.lms.dto.Student;
 import com.cg.lms.dto.Transactions;
+import com.cg.lms.exception.BookCopiesNotAvailableException;
 
 @Repository
 @Transactional
@@ -24,56 +27,53 @@ public class TransactionRepoImpl implements TransactionRepo {
 	private EntityManager mgr;
 
 	@Override
-	public Transactions borrowABook(int bookId, int studentId) {
-		
+	public Transactions borrowABook(int bookId, int studentId) throws BookCopiesNotAvailableException {
+
 		Book b = mgr.createNamedQuery("findBookById", Book.class).setParameter("bookId", bookId).getSingleResult();
-		Student s = mgr.createNamedQuery("findStudentById", Student.class).setParameter("studentId", studentId).getSingleResult();
-		if(b.getBookStatus().equalsIgnoreCase("free") && s!=null && b.getNoOfCopies()>=1) {
-			Transactions transaction = new Transactions();
-			Date dateOfIssue = new Date();
-			transaction.setDateOfIssue(dateOfIssue);
-			s.setIntrests(b.getBookGenre());
-			transaction.setStudent(s);
+		Student s = mgr.createNamedQuery("findStudentById", Student.class).setParameter("studentId", studentId)
+				.getSingleResult();
+
+		if (b.getBookStatus().equalsIgnoreCase("free") && b.getNoOfCopies() >= 1) {
 			
-			b.setBookStatus("issued");
-//			if(b.getNoOfCopies()>=1) {
-				b.setNoOfCopies((b.getNoOfCopies()-1));
+				Transactions transaction = new Transactions();
+				Date dateOfIssue = new Date();
+				transaction.setDateOfIssue(dateOfIssue);
+				s.setIntrests(b.getBookGenre());
+				transaction.setStudent(s);
+
+				b.setBookStatus("issued");
+				b.setNoOfCopies((b.getNoOfCopies() - 1));
 				transaction.setBook(b);
-				
+
 				LocalDate dateOfIssueLocal = dateOfIssue.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
 				LocalDate dateOfReturnLocal = dateOfIssueLocal.plusDays(fixedDaysToReturnBook);
 				Date dateOfReturn = Date.from(dateOfReturnLocal.atStartOfDay(ZoneId.systemDefault()).toInstant());
 				transaction.setDateOfReturn(dateOfReturn);
-//				mgr.merge(b);
-//				mgr.merge(s);
 				mgr.persist(transaction);
 				return transaction;
-//			}
-//			else {
-//				System.out.println("Not enough copies of this book!");
-//				return null;
-//			}
+			}
+			else {
+				throw new BookCopiesNotAvailableException("There are no copies of book: " + b.getBookName() + " available.");
+			}
 		}
-		else {
-			return null;
-		}
-	}
 
 	@Override
-	public Transactions returnABook(int bookId, int studentId, int transactionId, Date returnDate) {
-//		Transactions transaction = new Transactions();
+	public Transactions returnABook(int transactionId, Date returnDate) {
 		Transactions transaction = mgr.createNamedQuery("findTransactionById", Transactions.class).setParameter("transactionId", transactionId).getSingleResult();
 		Date dateOfIssue = transaction.getDateOfIssue();
-//		Date dateOfReturn = transaction.getDateOfReturn();
+		
+		//In case of actual returning of book, this date will be system date
 //		transaction.setDateOfReturn(new Date());
 		transaction.setDateOfReturn(returnDate);
+		
+		//finding the overdue
 		long diffInMillies = Math.abs(dateOfIssue.getTime() - returnDate.getTime());
         long diff = TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
+        
+        //calculating fine amount to be paid based on overdue
         double amount = returnDueAmount((int)diff);
-//        transaction.setDateOfReturn(new Date());
 		transaction.setAmount(amount);
-//		transaction.setStudent(mgr.createNamedQuery("findStudentById", Student.class).setParameter("studentId", studentId).getSingleResult());
-//		transaction.setBook(mgr.createNamedQuery("findBookById", Book.class).setParameter("bookId", bookId).getSingleResult());
+		
 		if(transaction.getBook().getBookStatus().equalsIgnoreCase("issued")) {
 			transaction.getBook().setBookStatus("free");
 			transaction.getBook().setNoOfCopies((transaction.getBook().getNoOfCopies())+1);
@@ -100,6 +100,27 @@ public class TransactionRepoImpl implements TransactionRepo {
 			return amount;
 		}
 		return amount;
+	}
+
+	@Override
+	public List<Book> getListOfBooksTakenByStudent(int studentId) {
+		//get all transactions involving a particular student
+		List<Transactions> listOfAllTransactions = mgr.createNamedQuery("getListOfBooksTakenByStudent", Transactions.class).setParameter("studentId", studentId).getResultList();
+		List<Book> listOfBooks = new ArrayList<>();
+		for(Transactions txn : listOfAllTransactions) {
+			listOfBooks.add(txn.getBook());
+		}
+		return listOfBooks;
+	}
+
+	@Override
+	public List<Student> getListOfPeopleTakingABook(int bookId) {
+		List<Transactions> listOfAllTransactions = mgr.createNamedQuery("getListOfPeopleTakingABook", Transactions.class).setParameter("bookId", bookId).getResultList();
+		List<Student> listOfStudents = new ArrayList<>();
+		for(Transactions txn : listOfAllTransactions) {
+			listOfStudents.add(txn.getStudent());
+		}
+		return listOfStudents;
 	}
 
 }

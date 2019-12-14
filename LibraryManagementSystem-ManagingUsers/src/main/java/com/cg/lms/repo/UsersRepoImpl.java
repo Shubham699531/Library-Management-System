@@ -24,7 +24,7 @@ public class UsersRepoImpl implements UsersRepo{
 
 	@Override
 	public Student validateStudentLogin(String userName, String password) {
-		Student student;
+		Student student = null;
 		try {
 			student = mgr.createNamedQuery("validateLogin", Student.class).setParameter("userName", userName).setParameter("password", password).getSingleResult();
 		} catch (NoResultException e) {

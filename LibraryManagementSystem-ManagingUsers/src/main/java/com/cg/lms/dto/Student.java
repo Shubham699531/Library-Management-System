@@ -1,27 +1,21 @@
 package com.cg.lms.dto;
 
 import java.util.Date;
-import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 
 @Entity
-@SequenceGenerator(name = "student_gen", sequenceName = "STUDENT_GEN")
+@SequenceGenerator(name = "student_id_gen", sequenceName = "student_id_gen", allocationSize = 1)
 @NamedQuery(name = "validateLogin", query = "FROM Student WHERE userName =:userName and password =:password")
 public class Student {
 	
-	public Student() {
-		// TODO Auto-generated constructor stub
-	}
-	
 	@Id
-	@GeneratedValue(generator = "student_gen")
+	@GeneratedValue(generator = "student_id_gen")
 	private int studentId;
 	@Column(length = 50)
 	private String name;
@@ -37,9 +31,6 @@ public class Student {
 	@Column(length = 50)
 	private String password;
 	private String intrests;
-
-//	@OneToMany(mappedBy = "student")
-//	private List<Transactions> transactions;
 
 	public int getStudentId() {
 		return studentId;
@@ -112,14 +103,6 @@ public class Student {
 	public void setIntrests(String intrests) {
 		this.intrests = intrests;
 	}
-
-//	public List<Transactions> getTransactions() {
-//		return transactions;
-//	}
-//
-//	public void setTransactions(List<Transactions> transactions) {
-//		this.transactions = transactions;
-//	}
 	
 	
 }

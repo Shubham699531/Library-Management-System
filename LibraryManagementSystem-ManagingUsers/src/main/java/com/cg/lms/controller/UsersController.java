@@ -30,7 +30,14 @@ public class UsersController {
 	//http://localhost:8883/users/validateLogin?userName=1&password="XYZ"
 	@GetMapping(value = "/validateLogin")
 	Student validateStudentLogin(@RequestParam String userName, @RequestParam String password) {
-		return repo.validateStudentLogin(userName, password);
+		Student student = repo.validateStudentLogin(userName, password);
+		if(student == null) {
+			return null;
+		}
+		else {
+			return student;
+		}
+		
 	}
 
 }

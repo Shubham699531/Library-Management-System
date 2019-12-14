@@ -12,15 +12,13 @@ import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
 
 @Entity
-@SequenceGenerator(name = "txn_gen", sequenceName = "TXN_GEN")
+@SequenceGenerator(name = "txn_id_gen", sequenceName = "txn_id_gen", allocationSize = 1)
 @NamedQuery(name = "findTransactionById", query = "FROM Transactions WHERE transactionId =:transactionId")
 public class Transactions {
 	
 	@Id
-	@GeneratedValue(generator = "txn_gen")
+	@GeneratedValue(generator = "txn_id_gen")
 	private int transactionId;
-//	private int bookId;
-//	private int studentId;
 	private Date dateOfIssue;
 	private Date dateOfReturn;
 	private double amount;
@@ -40,18 +38,6 @@ public class Transactions {
 	public void setTransactionId(int transactionId) {
 		this.transactionId = transactionId;
 	}
-//	public int getBookId() {
-//		return bookId;
-//	}
-//	public void setBookId(int bookId) {
-//		this.bookId = bookId;
-//	}
-//	public int getStudentId() {
-//		return studentId;
-//	}
-//	public void setStudentId(int studentId) {
-//		this.studentId = studentId;
-//	}
 	public Date getDateOfIssue() {
 		return dateOfIssue;
 	}
@@ -87,8 +73,7 @@ public class Transactions {
 	}
 	public void setStudent(Student student) {
 		this.student = student;
-	}
-	
+	}	
 	
 }
 
