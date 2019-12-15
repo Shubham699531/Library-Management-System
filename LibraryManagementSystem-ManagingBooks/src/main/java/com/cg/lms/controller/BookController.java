@@ -15,72 +15,136 @@ import com.cg.lms.dto.Book;
 import com.cg.lms.exception.BookNotFoundException;
 import com.cg.lms.repo.BookRepo;
 
+/**
+ * 
+ * @author Shubham
+ *
+ */
 @RestController
 @RequestMapping(value = "/book")
 public class BookController {
-	
+
 	@Autowired
 	private BookRepo repo;
-	
-	//http://localhost:8881/book/add
+
+	/**
+	 * 
+	 * @param b
+	 * @return
+	 */
+	// http://localhost:8881/book/add
 	@PostMapping(value = "/add")
 	Book addBook(@RequestBody Book b) {
-		b.setBookStatus("free");
+		b.setBookStatus("available");
 		return repo.save(b);
 	}
-	
-	//http://localhost:8881/book/getById?bookId=1
+
+	/**
+	 * 
+	 * @param bookId
+	 * @return
+	 * @throws BookNotFoundException
+	 */
+	// http://localhost:8881/book/getById?bookId=1
 	@GetMapping(value = "/getById")
 	Book getBookById(@RequestParam int bookId) throws BookNotFoundException {
 		Book book = repo.findById(bookId).get();
-		if(book == null) {
+		if (book == null) {
 			throw new BookNotFoundException("Book not found with id: " + bookId);
-		}
-		else {
+		} else {
 			return book;
 		}
 	}
-	
-	//http://localhost:8881/book/getByName?bookName="xyz"
+
+	/**
+	 * 
+	 * @param bookName
+	 * @return
+	 * @throws BookNotFoundException
+	 */
+	// http://localhost:8881/book/getByName?bookName="xyz"
 	@GetMapping(value = "/getByName")
 	Book getBookByName(@RequestParam String bookName) throws BookNotFoundException {
 		Book book = repo.findBookByName(bookName);
-		if(book == null) {
+		if (book == null) {
 			System.out.println("No book found with this name: " + bookName);
 			throw new BookNotFoundException("No book found with this name: " + bookName);
-		}
-		else {
+		} else {
 			return book;
 		}
 	}
-	
-	//http://localhost:8881/book/getAll
+
+	/**
+	 * 
+	 * @param genre
+	 * @return
+	 * @throws BookNotFoundException
+	 */
+	// http://localhost:8881/book/getByGenre?genre="xyz"
+	@GetMapping(value = "/getByGenre")
+	Book getBookByGenre(@RequestParam String genre) throws BookNotFoundException {
+		Book book = repo.findBookByName(genre);
+		if (book == null) {
+			System.out.println("No book found in this genre: " + genre);
+			throw new BookNotFoundException("No book found in this genre: " + genre);
+		} else {
+			return book;
+		}
+	}
+
+	/**
+	 * 
+	 * @param author
+	 * @return
+	 * @throws BookNotFoundException
+	 */
+	// http://localhost:8881/book/getByAuthor?author="xyz"
+	@GetMapping(value = "/getByAuthor")
+	Book getBookByAuthor(@RequestParam String author) throws BookNotFoundException {
+		Book book = repo.findBookByName(author);
+		if (book == null) {
+			System.out.println("No book found for this author: " + author);
+			throw new BookNotFoundException("No book found for this author: " + author);
+		} else {
+			return book;
+		}
+	}
+
+	/**
+	 * 
+	 * @return
+	 * @throws BookNotFoundException
+	 */
+	// http://localhost:8881/book/getAll
 	@GetMapping(value = "/getAll")
 	List<Book> getAllBooks() throws BookNotFoundException {
 		List<Book> listOfBooks = repo.findAll();
-		if(listOfBooks.size()==0) {
+		if (listOfBooks.size() == 0) {
 			System.out.println("No books available currently!");
 			throw new BookNotFoundException("No books available currently!");
-		}
-		else {
+		} else {
 			return listOfBooks;
-		}	
+		}
 	}
-	
-	//http://localhost:8881/book/delete/{bookId}
+
+	/**
+	 * 
+	 * @param bookId
+	 * @return
+	 * @throws BookNotFoundException
+	 */
+	// http://localhost:8881/book/delete/{bookId}
 	@GetMapping(value = "/delete/{bookId}")
 	boolean deleteABook(@PathVariable int bookId) throws BookNotFoundException {
 		Book b = getBookById(bookId);
-		if(b == null || b.getBookStatus().equalsIgnoreCase("removed")) {
+		if (b == null || b.getBookStatus().equalsIgnoreCase("removed")) {
 			System.out.println("Book: " + b.getBookName() + " already removed!");
 			return false;
-		}
-		else {
+		} else {
 			b.setBookStatus("removed");
 			repo.save(b);
 			return true;
-		}		
+		}
 	}
 
 }
-

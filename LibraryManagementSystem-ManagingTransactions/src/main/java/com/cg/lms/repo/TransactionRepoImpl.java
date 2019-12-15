@@ -16,7 +16,9 @@ import org.springframework.stereotype.Repository;
 import com.cg.lms.dto.Book;
 import com.cg.lms.dto.Student;
 import com.cg.lms.dto.Transactions;
+import com.cg.lms.exception.BookAlreadyReturnedException;
 import com.cg.lms.exception.BookCopiesNotAvailableException;
+import com.cg.lms.exception.SameBookAlreadyTakenException;
 
 @Repository
 @Transactional
@@ -27,21 +29,25 @@ public class TransactionRepoImpl implements TransactionRepo {
 	private EntityManager mgr;
 
 	@Override
-	public Transactions borrowABook(int bookId, int studentId) throws BookCopiesNotAvailableException {
+	public Transactions borrowABook(int bookId, int studentId) throws BookCopiesNotAvailableException, SameBookAlreadyTakenException {
 
 		Book b = mgr.createNamedQuery("findBookById", Book.class).setParameter("bookId", bookId).getSingleResult();
 		Student s = mgr.createNamedQuery("findStudentById", Student.class).setParameter("studentId", studentId)
 				.getSingleResult();
-
-		if (b.getBookStatus().equalsIgnoreCase("free") && b.getNoOfCopies() >= 1) {
-			
+		
+		List<Transactions> getTransactionsForAStudentAndBook = mgr.
+				createNamedQuery("getTransactionsForAStudentAndBook", Transactions.class)
+				.setParameter("bookId", bookId).setParameter("studentId", studentId)
+				.getResultList();
+		if(getTransactionsForAStudentAndBook.size()==0) {
+			if (b.getBookStatus().equalsIgnoreCase("available") && b.getNoOfCopies() >= 1) {
+				
 				Transactions transaction = new Transactions();
 				Date dateOfIssue = new Date();
 				transaction.setDateOfIssue(dateOfIssue);
 				s.setIntrests(b.getBookGenre());
 				transaction.setStudent(s);
 
-				b.setBookStatus("issued");
 				b.setNoOfCopies((b.getNoOfCopies() - 1));
 				transaction.setBook(b);
 
@@ -49,6 +55,7 @@ public class TransactionRepoImpl implements TransactionRepo {
 				LocalDate dateOfReturnLocal = dateOfIssueLocal.plusDays(fixedDaysToReturnBook);
 				Date dateOfReturn = Date.from(dateOfReturnLocal.atStartOfDay(ZoneId.systemDefault()).toInstant());
 				transaction.setDateOfReturn(dateOfReturn);
+				transaction.setTransactionStatus("open");
 				mgr.persist(transaction);
 				return transaction;
 			}
@@ -56,14 +63,22 @@ public class TransactionRepoImpl implements TransactionRepo {
 				throw new BookCopiesNotAvailableException("There are no copies of book: " + b.getBookName() + " available.");
 			}
 		}
+		else {
+			System.out.println("You already have taken this book.");
+			throw new SameBookAlreadyTakenException("You already have taken this book.");
+		}
+		
+			
+		
+		}
 
 	@Override
-	public Transactions returnABook(int transactionId, Date returnDate) {
+	public Transactions returnABook(int transactionId, Date returnDate) throws BookAlreadyReturnedException {
 		Transactions transaction = mgr.createNamedQuery("findTransactionById", Transactions.class).setParameter("transactionId", transactionId).getSingleResult();
 		Date dateOfIssue = transaction.getDateOfIssue();
 		
 		//In case of actual returning of book, this date will be system date
-//		transaction.setDateOfReturn(new Date());
+       //transaction.setDateOfReturn(new Date());
 		transaction.setDateOfReturn(returnDate);
 		
 		//finding the overdue
@@ -74,13 +89,14 @@ public class TransactionRepoImpl implements TransactionRepo {
         double amount = returnDueAmount((int)diff);
 		transaction.setAmount(amount);
 		
-		if(transaction.getBook().getBookStatus().equalsIgnoreCase("issued")) {
-			transaction.getBook().setBookStatus("free");
+		if(transaction.getTransactionStatus().equalsIgnoreCase("open")) {
 			transaction.getBook().setNoOfCopies((transaction.getBook().getNoOfCopies())+1);
+			transaction.setTransactionStatus("closed");
 			return mgr.merge(transaction);
 		}
 		else {
-			return null;
+			System.out.println("Book already returned.");
+			throw new BookAlreadyReturnedException("Book has already been returned.");
 		}
 	}
 

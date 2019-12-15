@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.cg.lms.dto.Student;
+import com.cg.lms.exception.InvalidLoginException;
 
 @Repository
 @Transactional
@@ -23,13 +24,12 @@ public class UsersRepoImpl implements UsersRepo{
 	}
 
 	@Override
-	public Student validateStudentLogin(String userName, String password) {
+	public Student validateStudentLogin(String userName, String password) throws InvalidLoginException {
 		Student student = null;
 		try {
 			student = mgr.createNamedQuery("validateLogin", Student.class).setParameter("userName", userName).setParameter("password", password).getSingleResult();
 		} catch (NoResultException e) {
-			System.out.println("Invalid Login! " + e.getMessage());
-			return null;
+			throw new InvalidLoginException("Invalid Login Credentials.");
 		}
 		return student;
 	}

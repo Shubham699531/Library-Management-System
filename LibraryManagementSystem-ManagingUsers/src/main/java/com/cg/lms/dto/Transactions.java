@@ -25,6 +25,10 @@ public class Transactions {
 	@Column(length = 50)
 	private String review;
 	
+	//can be closed or open(if the book is not returned)
+	@Column(length = 50)
+	private String transactionStatus;
+	
 	@ManyToOne
 	@JoinColumn(name = "bookId")
 	private Book book;
@@ -73,6 +77,12 @@ public class Transactions {
 	}
 	public void setStudent(Student student) {
 		this.student = student;
+	}
+	public String getTransactionStatus() {
+		return transactionStatus;
+	}
+	public void setTransactionStatus(String transactionStatus) {
+		this.transactionStatus = transactionStatus;
 	}	
 	
 }

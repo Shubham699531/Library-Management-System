@@ -10,5 +10,9 @@ import com.cg.lms.dto.Book;
 public interface BookRepo extends JpaRepository<Book, Integer>{
 	
 	Book findBookByName(@Param("bookName") String bookName);
+	
+	Book findBookByGenre(@Param("genre") String genre);
+	
+	Book findBookByAuthor(@Param("author") String author);
 
 }

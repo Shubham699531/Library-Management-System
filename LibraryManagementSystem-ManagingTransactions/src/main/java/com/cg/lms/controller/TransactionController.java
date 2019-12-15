@@ -15,7 +15,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.cg.lms.dto.Book;
 import com.cg.lms.dto.Student;
 import com.cg.lms.dto.Transactions;
+import com.cg.lms.exception.BookAlreadyReturnedException;
 import com.cg.lms.exception.BookCopiesNotAvailableException;
+import com.cg.lms.exception.SameBookAlreadyTakenException;
 import com.cg.lms.repo.TransactionRepo;
 
 @Transactional
@@ -28,12 +30,12 @@ public class TransactionController {
 	
 	//http://localhost:8882/transaction/borrow?bookId=1&studentId=1
 	@GetMapping(value = "/borrow")
-	Transactions borrowABook(@RequestParam int bookId, @RequestParam int studentId) throws BookCopiesNotAvailableException {
+	Transactions borrowABook(@RequestParam int bookId, @RequestParam int studentId) throws BookCopiesNotAvailableException, SameBookAlreadyTakenException {
 		return repo.borrowABook(bookId, studentId);
 	}
 	//http://localhost:8882/transaction/return?transactionId=1&returnDate=2019/11/26
 	@GetMapping(value = "/return")
-	Transactions returnABook(@RequestParam int transactionId, @RequestParam(value = "returnDate") @DateTimeFormat(pattern = "yyyy-MM-dd") Date returnDate) {
+	Transactions returnABook(@RequestParam int transactionId, @RequestParam(value = "returnDate") @DateTimeFormat(pattern = "yyyy-MM-dd") Date returnDate) throws BookAlreadyReturnedException {
 		return repo.returnABook(transactionId, returnDate);
 	}
 	

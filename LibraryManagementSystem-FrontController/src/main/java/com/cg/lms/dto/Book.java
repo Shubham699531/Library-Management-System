@@ -1,36 +1,14 @@
 package com.cg.lms.dto;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.NamedQuery;
-import javax.persistence.SequenceGenerator;
-
-@Entity
-@SequenceGenerator(name = "book_id_gen", sequenceName = "book_id_gen", allocationSize = 1)
-@NamedQuery(name = "Book.findBookByName", query = "SELECT b FROM Book b WHERE b.bookName =:bookName")
-@NamedQuery(name = "Book.findBookByGenre", query = "SELECT b FROM Book b WHERE b.bookGenre =:genre")
-@NamedQuery(name = "Book.findBookByAuthor", query = "SELECT b FROM Book b WHERE b.bookAuthor =:author")
 public class Book {
-	
-	@Id
-	@GeneratedValue(generator = "book_id_gen")
+
 	private int bookId;
-	@Column(length = 50)
 	private String bookName;
-	@Column(length = 50)
 	private String bookGenre;
 	private double bookPrice;
-	@Column(length = 50, unique = true)
 	private String ISBN;
-	//Status only needed for "available" and "removed"
-	//Nothing to do with issued/not-issued
-	@Column(length = 50)
 	private String bookStatus;
-	@Column(length = 50)
 	private String bookAuthor;
-	@Column(length = 50)
 	private String bookDescription;
 	private int noOfPages;
 	private int noOfCopies;

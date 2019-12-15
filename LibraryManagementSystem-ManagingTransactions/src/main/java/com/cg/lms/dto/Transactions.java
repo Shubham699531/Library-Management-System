@@ -16,6 +16,7 @@ import javax.persistence.SequenceGenerator;
 @NamedQuery(name = "findTransactionById", query = "FROM Transactions WHERE transactionId =:transactionId")
 @NamedQuery(name = "getListOfBooksTakenByStudent", query = "FROM Transactions WHERE student.studentId =:studentId")
 @NamedQuery(name = "getListOfPeopleTakingABook", query = "FROM Transactions WHERE book.bookId =:bookId")
+@NamedQuery(name = "getTransactionsForAStudentAndBook", query = "FROM Transactions WHERE book.bookId =:bookId AND student.studentId =:studentId AND transactionStatus='open'")
 public class Transactions {
 	
 	@Id
@@ -26,6 +27,10 @@ public class Transactions {
 	private double amount;
 	@Column(length = 50)
 	private String review;
+	
+	//can be closed or open(if the book is not returned)
+	@Column(length = 50)
+	private String transactionStatus;
 	
 	@ManyToOne
 	@JoinColumn(name = "bookId")
@@ -75,6 +80,12 @@ public class Transactions {
 	}
 	public void setStudent(Student student) {
 		this.student = student;
+	}
+	public String getTransactionStatus() {
+		return transactionStatus;
+	}
+	public void setTransactionStatus(String transactionStatus) {
+		this.transactionStatus = transactionStatus;
 	}	
 }
 

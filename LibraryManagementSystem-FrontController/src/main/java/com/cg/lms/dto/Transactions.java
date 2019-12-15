@@ -2,36 +2,18 @@ package com.cg.lms.dto;
 
 import java.util.Date;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.SequenceGenerator;
-
-@Entity
-@SequenceGenerator(name = "txn_id_gen", sequenceName = "txn_id_gen", allocationSize = 1)
 public class Transactions {
 	
-	@Id
-	@GeneratedValue(generator = "txn_id_gen")
 	private int transactionId;
 	private Date dateOfIssue;
 	private Date dateOfReturn;
 	private double amount;
-	@Column(length = 50)
 	private String review;
 	
 	//can be closed or open(if the book is not returned)
-	@Column(length = 50)
 	private String transactionStatus;
 	
-	@ManyToOne
-	@JoinColumn(name = "bookId")
 	private Book book;
-	@ManyToOne
-	@JoinColumn(name = "studentId")
 	private Student student;
 	
 	public int getTransactionId() {
@@ -81,6 +63,7 @@ public class Transactions {
 	}
 	public void setTransactionStatus(String transactionStatus) {
 		this.transactionStatus = transactionStatus;
-	}
+	}	
 	
 }
+
