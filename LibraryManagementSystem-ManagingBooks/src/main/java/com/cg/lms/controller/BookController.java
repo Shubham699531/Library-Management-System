@@ -1,6 +1,10 @@
 package com.cg.lms.controller;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -56,76 +60,6 @@ public class BookController {
 		}
 	}
 
-	/**
-	 * 
-	 * @param bookName
-	 * @return
-	 * @throws BookNotFoundException
-	 */
-	// http://localhost:8881/book/getByName?bookName="xyz"
-	@GetMapping(value = "/getByName")
-	Book getBookByName(@RequestParam String bookName) throws BookNotFoundException {
-		Book book = repo.findBookByName(bookName);
-		if (book == null) {
-			System.out.println("No book found with this name: " + bookName);
-			throw new BookNotFoundException("No book found with this name: " + bookName);
-		} else {
-			return book;
-		}
-	}
-
-	/**
-	 * 
-	 * @param genre
-	 * @return
-	 * @throws BookNotFoundException
-	 */
-	// http://localhost:8881/book/getByGenre?genre="xyz"
-	@GetMapping(value = "/getByGenre")
-	Book getBookByGenre(@RequestParam String genre) throws BookNotFoundException {
-		Book book = repo.findBookByName(genre);
-		if (book == null) {
-			System.out.println("No book found in this genre: " + genre);
-			throw new BookNotFoundException("No book found in this genre: " + genre);
-		} else {
-			return book;
-		}
-	}
-
-	/**
-	 * 
-	 * @param author
-	 * @return
-	 * @throws BookNotFoundException
-	 */
-	// http://localhost:8881/book/getByAuthor?author="xyz"
-	@GetMapping(value = "/getByAuthor")
-	Book getBookByAuthor(@RequestParam String author) throws BookNotFoundException {
-		Book book = repo.findBookByName(author);
-		if (book == null) {
-			System.out.println("No book found for this author: " + author);
-			throw new BookNotFoundException("No book found for this author: " + author);
-		} else {
-			return book;
-		}
-	}
-
-	/**
-	 * 
-	 * @return
-	 * @throws BookNotFoundException
-	 */
-	// http://localhost:8881/book/getAll
-	@GetMapping(value = "/getAll")
-	List<Book> getAllBooks() throws BookNotFoundException {
-		List<Book> listOfBooks = repo.findAll();
-		if (listOfBooks.size() == 0) {
-			System.out.println("No books available currently!");
-			throw new BookNotFoundException("No books available currently!");
-		} else {
-			return listOfBooks;
-		}
-	}
 
 	/**
 	 * 
@@ -145,6 +79,38 @@ public class BookController {
 			repo.save(b);
 			return true;
 		}
+	}
+	//http://localhost:8881/book/search
+	@GetMapping(value = "/search")
+	Set<Book> generalizedSearch(@RequestParam String something) throws BookNotFoundException{
+		if(something.equals("")) {
+			Set<Book> findAllBooks = repo.findAllBooks();
+			if(findAllBooks.size()==0) {
+				throw new BookNotFoundException("No books available currently.");
+			}
+			else {
+				return findAllBooks;
+			}
+			
+		}
+		else {
+			Set<Book> searchNamedBooks = repo.findBookByName("%" + something + "%");
+			Set<Book> searchGenreBooks = repo.findBookByGenre("%" + something + "%");
+			Set<Book> searchAuthoredBooks = repo.findBookByAuthor("%" + something + "%");
+			
+			Set<Book> finalSet = new HashSet<>();
+			finalSet.addAll(searchNamedBooks);
+			finalSet.addAll(searchGenreBooks);
+			finalSet.addAll(searchAuthoredBooks);
+			if(finalSet.size()==0) {
+				throw new BookNotFoundException("Sorry, No Results Found.");
+			}
+			else {
+				return finalSet;
+			}
+			
+		}
+		
 	}
 
 }

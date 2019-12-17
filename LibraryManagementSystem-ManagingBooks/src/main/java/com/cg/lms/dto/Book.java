@@ -9,9 +9,10 @@ import javax.persistence.SequenceGenerator;
 
 @Entity
 @SequenceGenerator(name = "book_id_gen", sequenceName = "book_id_gen", allocationSize = 1)
-@NamedQuery(name = "Book.findBookByName", query = "SELECT b FROM Book b WHERE b.bookName =:bookName")
-@NamedQuery(name = "Book.findBookByGenre", query = "SELECT b FROM Book b WHERE b.bookGenre =:genre")
-@NamedQuery(name = "Book.findBookByAuthor", query = "SELECT b FROM Book b WHERE b.bookAuthor =:author")
+@NamedQuery(name = "Book.findBookByName", query = "SELECT b FROM Book b WHERE b.bookName like :bookName")
+@NamedQuery(name = "Book.findBookByGenre", query = "SELECT b FROM Book b WHERE b.bookGenre like :genre")
+@NamedQuery(name = "Book.findBookByAuthor", query = "SELECT b FROM Book b WHERE b.bookAuthor like :author")
+@NamedQuery(name = "Book.findAllBooks", query = "SELECT b FROM Book b")
 public class Book {
 	
 	@Id
