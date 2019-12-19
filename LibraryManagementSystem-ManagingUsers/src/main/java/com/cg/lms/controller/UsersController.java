@@ -24,7 +24,7 @@ public class UsersController {
 	
 	//http://localhost:8883/users/register
 	@PostMapping(value = "/register")
-	Student registerStudent(@RequestBody Student s) {
+	Student registerStudent(@RequestBody Student s){
 		return repo.registerStudent(s);
 	}
 	

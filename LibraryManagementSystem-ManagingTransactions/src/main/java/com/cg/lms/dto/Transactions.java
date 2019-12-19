@@ -15,6 +15,7 @@ import javax.persistence.SequenceGenerator;
 @SequenceGenerator(name = "txn_id_gen", sequenceName = "txn_id_gen", allocationSize = 1)
 @NamedQuery(name = "findTransactionById", query = "FROM Transactions WHERE transactionId =:transactionId")
 @NamedQuery(name = "getListOfBooksTakenByStudent", query = "FROM Transactions WHERE student.studentId =:studentId")
+@NamedQuery(name = "getListOfBooksTakenByStudentAndNotReturned", query = "FROM Transactions WHERE student.studentId =:studentId AND transactionStatus='open'")
 @NamedQuery(name = "getListOfPeopleTakingABook", query = "FROM Transactions WHERE book.bookId =:bookId")
 @NamedQuery(name = "getTransactionsForAStudentAndBook", query = "FROM Transactions WHERE book.bookId =:bookId AND student.studentId =:studentId AND transactionStatus='open'")
 public class Transactions {

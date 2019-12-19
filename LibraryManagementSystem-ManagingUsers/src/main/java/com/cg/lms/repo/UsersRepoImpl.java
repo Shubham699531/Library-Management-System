@@ -24,14 +24,14 @@ public class UsersRepoImpl implements UsersRepo{
 	private EntityManager mgr;
 
 	@Override
-	public Student registerStudent(Student s) {
+	public Student registerStudent(Student s){
 		Login login = new Login();
-		System.out.println(AES.encrypt(s.getUserName(), key));
 		login.setUserName(AES.encrypt(s.getUserName(), key));
 		login.setPassword(AES.encrypt(s.getPassword(), key));
 		login.setRole("student");
 		mgr.persist(login);
-		 mgr.persist(s);
+		mgr.persist(s);
+
 		return s;
 	}
 
@@ -40,11 +40,11 @@ public class UsersRepoImpl implements UsersRepo{
 		 try {
 			Login login = mgr.createNamedQuery("validateLogin", Login.class).setParameter("userName", AES.encrypt(userName, key)).setParameter("password", AES.encrypt(password, key)).getSingleResult();
 			if(login.getRole().equalsIgnoreCase("student")) {
-				Student student = mgr.createNamedQuery("returnStudentByUserName", Student.class).setParameter("userName", AES.encrypt(userName, key)).getSingleResult();
+				Student student = mgr.createNamedQuery("returnStudentByUserName", Student.class).setParameter("userName", userName).getSingleResult();
 				return student;
 			}
 			else {
-				Librarian librarian = mgr.createNamedQuery("returnLibrarianByUserName", Librarian.class).setParameter("userName", AES.encrypt(userName, key)).getSingleResult();
+				Librarian librarian = mgr.createNamedQuery("returnLibrarianByUserName", Librarian.class).setParameter("userName", userName).getSingleResult();
 				return librarian;
 			}
 		} catch (NoResultException e) {

@@ -28,6 +28,7 @@ public class Student {
 	private String email;
 	@Column(length = 50, unique = true)
 	private String userName;
+	@Column(length = 50)
 	private String password;
 	private String intrests;
 
@@ -75,7 +76,7 @@ public class Student {
 		return email;
 	}
 
-	public void setEmail(String email) {
+	public void setEmail(String email){
 		this.email = email;
 	}
 
@@ -83,7 +84,7 @@ public class Student {
 		return userName;
 	}
 
-	public void setUserName(String userName) {
+	public void setUserName(String userName){
 		this.userName = userName;
 	}
 
