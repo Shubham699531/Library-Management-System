@@ -57,28 +57,10 @@ public class FrontController {
 			return template.getForObject("http://localhost:8881/book/getById?bookId=" + bookId, Book.class);
 		}
 
-		// http://localhost:8880/front/getByName?bookName=xyz
-		@GetMapping(value = "/getByName")
-		Book getBookByName(@RequestParam String bookName) throws BookNotFoundException {
-			return template.getForObject("http://localhost:8881/book/getByName?bookName=" + bookName, Book.class);
-		}
-
-		// http://localhost:8880/front/getByGenre?genre=xyz
-		@GetMapping(value = "/getByGenre")
-		Book getBookByGenre(@RequestParam String genre) throws BookNotFoundException {
-			return template.getForObject("http://localhost:8881/book/getByGenre?genre=" + genre, Book.class);
-		}
-
-		// http://localhost:8880/front/getByAuthor?author=xyz
-		@GetMapping(value = "/getByAuthor")
-		Book getBookByAuthor(@RequestParam String author) throws BookNotFoundException {
-			return template.getForObject("http://localhost:8881/book/getByAuthor?author=" + author, Book.class);
-		}
-		
-		// http://localhost:8880/front/getAll
-		@GetMapping(value = "/getAll")
-		List<Book> getAllBooks() throws BookNotFoundException {
-			return Arrays.asList(template.getForObject("http://localhost:8881/book/getAll", Book[].class));
+		// http://localhost:8880/front/search?something=xyz
+		@GetMapping(value = "/search")
+		List<Book> genralizedSearch(@RequestParam String something) throws BookNotFoundException {
+			return Arrays.asList(template.getForObject("http://localhost:8881/book/search?something=" + something, Book[].class));
 		}
 
 		// http://localhost:8880/front/delete/{bookId}
