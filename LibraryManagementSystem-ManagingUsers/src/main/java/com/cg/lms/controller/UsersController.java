@@ -30,8 +30,8 @@ public class UsersController {
 	
 	//http://localhost:8883/users/validateLogin?userName=1&password="XYZ"
 	@GetMapping(value = "/validateLogin")
-	Student validateStudentLogin(@RequestParam String userName, @RequestParam String password) throws InvalidLoginException {
-		return repo.validateStudentLogin(userName, password);	
+	Object validateLogin(@RequestParam String userName, @RequestParam String password) throws InvalidLoginException {
+		return repo.validateLogin(userName, password);	
 	}
 
 }

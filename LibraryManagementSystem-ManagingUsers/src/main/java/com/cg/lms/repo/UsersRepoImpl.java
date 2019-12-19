@@ -1,5 +1,7 @@
 package com.cg.lms.repo;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.transaction.Transactional;
@@ -7,31 +9,63 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.cg.lms.AES.AES;
+import com.cg.lms.dto.Librarian;
+import com.cg.lms.dto.Login;
 import com.cg.lms.dto.Student;
 import com.cg.lms.exception.InvalidLoginException;
 
 @Repository
 @Transactional
 public class UsersRepoImpl implements UsersRepo{
+	static final String key = "A";
 	
 	@Autowired
 	private EntityManager mgr;
 
 	@Override
 	public Student registerStudent(Student s) {
+		Login login = new Login();
+		System.out.println(AES.encrypt(s.getUserName(), key));
+		login.setUserName(AES.encrypt(s.getUserName(), key));
+		login.setPassword(AES.encrypt(s.getPassword(), key));
+		login.setRole("student");
+		mgr.persist(login);
 		 mgr.persist(s);
 		return s;
 	}
 
 	@Override
-	public Student validateStudentLogin(String userName, String password) throws InvalidLoginException {
-		Student student = null;
-		try {
-			student = mgr.createNamedQuery("validateLogin", Student.class).setParameter("userName", userName).setParameter("password", password).getSingleResult();
+	public Object validateLogin(String userName, String password) throws InvalidLoginException {
+		 try {
+			Login login = mgr.createNamedQuery("validateLogin", Login.class).setParameter("userName", AES.encrypt(userName, key)).setParameter("password", AES.encrypt(password, key)).getSingleResult();
+			if(login.getRole().equalsIgnoreCase("student")) {
+				Student student = mgr.createNamedQuery("returnStudentByUserName", Student.class).setParameter("userName", AES.encrypt(userName, key)).getSingleResult();
+				return student;
+			}
+			else {
+				Librarian librarian = mgr.createNamedQuery("returnLibrarianByUserName", Librarian.class).setParameter("userName", AES.encrypt(userName, key)).getSingleResult();
+				return librarian;
+			}
 		} catch (NoResultException e) {
-			throw new InvalidLoginException("Invalid Login Credentials.");
+			throw new InvalidLoginException("Invalid login credentials.");
 		}
-		return student;
+	}
+
+	@Override
+	public Librarian registerLibrarian(Librarian l) {
+		Login login = new Login();
+		login.setUserName(AES.encrypt(l.getUserName(), key));
+		login.setPassword(AES.encrypt(l.getPassword(), key));
+		login.setRole("librarian");
+		mgr.persist(login);
+		mgr.persist(l);
+		return l;
+	}
+
+	@Override
+	public List<Librarian> listAllLibrarians() {
+		return mgr.createNamedQuery("listAllLibrarians", Librarian.class).getResultList();
 	}
 
 }

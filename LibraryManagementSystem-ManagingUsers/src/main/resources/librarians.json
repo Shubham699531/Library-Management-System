@@ -1,0 +1,21 @@
+[
+	{
+		"name": "AK Dubey",
+		"dob": "1987-10-13",
+		"contactNo": 9876543210,
+		"email":"akdubey@gmail.com",
+		"userName":"akdubey007",
+		"password":"root",
+		"yearsOfExperience":7
+	},
+	
+	{
+		"name": "S Tripathi",
+		"dob": "1990-01-19",
+		"contactNo": 9876563210,
+		"email":"stripathi@gmail.com",
+		"userName":"stripathi8",
+		"password":"root",
+		"yearsOfExperience":6
+	}
+]
