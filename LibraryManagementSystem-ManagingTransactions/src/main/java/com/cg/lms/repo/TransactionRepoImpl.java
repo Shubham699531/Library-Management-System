@@ -1,5 +1,7 @@
 package com.cg.lms.repo;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
@@ -113,8 +115,10 @@ public class TransactionRepoImpl implements TransactionRepo {
 	}
 
 	@Override
-	public Transactions returnABook(int transactionId, Date returnDate) throws BookAlreadyReturnedException {
+	public Transactions returnABook(int transactionId, String rd) throws BookAlreadyReturnedException, ParseException {
 		Transactions transaction = null;
+		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+		Date returnDate = sdf.parse(rd);
 		try {
 			transaction = mgr.createNamedQuery("findTransactionById", Transactions.class)
 					.setParameter("transactionId", transactionId).getSingleResult();

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,12 +53,19 @@ public class BookController {
 	// http://localhost:8881/book/getById?bookId=1
 	@GetMapping(value = "/getById")
 	Book getBookById(@RequestParam int bookId) throws BookNotFoundException {
-		Book book = repo.findById(bookId).get();
-		if (book == null) {
+		Book book = null;
+		try {
+			book = repo.findById(bookId).get();
+			
+		} catch (NoSuchElementException e) {
 			throw new BookNotFoundException("Book not found with id: " + bookId);
-		} else {
-			return book;
 		}
+		return book;
+//		if (book == null) {
+//			throw new BookNotFoundException("Book not found with id: " + bookId);
+//		} else {
+//			return book;
+//		}
 	}
 
 
@@ -68,8 +76,8 @@ public class BookController {
 	 * @throws BookNotFoundException
 	 */
 	// http://localhost:8881/book/delete/{bookId}
-	@GetMapping(value = "/delete/{bookId}")
-	boolean deleteABook(@PathVariable int bookId) throws BookNotFoundException {
+	@GetMapping(value = "/delete")
+	boolean deleteABook(@RequestParam int bookId) throws BookNotFoundException {
 		Book b = getBookById(bookId);
 		if (b == null || b.getBookStatus().equalsIgnoreCase("removed")) {
 			System.out.println("Book: " + b.getBookName() + " already removed!");

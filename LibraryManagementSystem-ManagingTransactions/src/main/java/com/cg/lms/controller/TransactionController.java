@@ -1,5 +1,6 @@
 package com.cg.lms.controller;
 
+import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
 
@@ -35,7 +36,8 @@ public class TransactionController {
 	}
 	//http://localhost:8882/transaction/return?transactionId=1&returnDate=2019/11/26
 	@GetMapping(value = "/return")
-	Transactions returnABook(@RequestParam int transactionId, @RequestParam(value = "returnDate") @DateTimeFormat(pattern = "yyyy-MM-dd") Date returnDate) throws BookAlreadyReturnedException {
+	Transactions returnABook(@RequestParam int transactionId, @RequestParam String returnDate) throws BookAlreadyReturnedException, ParseException {
+		System.out.println(returnDate + " LL");
 		return repo.returnABook(transactionId, returnDate);
 	}
 	

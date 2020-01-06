@@ -1,5 +1,6 @@
 package com.cg.lms.repo;
 
+import java.text.ParseException;
 import java.util.Date;
 import java.util.List;
 
@@ -18,7 +19,7 @@ public interface TransactionRepo {
 	
 	boolean reviewABook(int transactionId, String review);
 
-	Transactions returnABook(int transactionId, Date returnDate) throws BookAlreadyReturnedException;
+	Transactions returnABook(int transactionId, String returnDate) throws BookAlreadyReturnedException, ParseException;
 	
 	List<Book> getListOfBooksTakenByStudent(int studentId);
 	

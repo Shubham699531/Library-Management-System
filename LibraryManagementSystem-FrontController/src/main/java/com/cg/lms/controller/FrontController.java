@@ -1,11 +1,16 @@
 package com.cg.lms.controller;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.DateTimeFormat.ISO;
+//import org.springframework.format.annotation.DateTimeFormat;
+//import org.springframework.format.annotation.DateTimeFormat.ISO;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
 import com.cg.lms.dto.Book;
+import com.cg.lms.dto.Librarian;
 import com.cg.lms.dto.Student;
 import com.cg.lms.dto.Transactions;
 import com.cg.lms.exception.BookAlreadyReturnedException;
@@ -39,13 +45,17 @@ public class FrontController {
 			return template.postForObject("http://localhost:8883/users/register", s, Student.class);
 		}
 		
+		//Object class not taking both the objects of Librarian as well as Student
+		//Problem needs to be solved..
+		
 		//http://localhost:8880/front/validateLogin?userName=1&password="XYZ"
 		@GetMapping(value = "/validateLogin")
-		Student validateStudentLogin(@RequestParam String userName, @RequestParam String password) throws InvalidLoginException {
-			return template.getForObject("http://localhost:8883/users/validateLogin?userName=" + userName + "&password=" + password, Student.class);
+		Object validateStudentLogin(@RequestParam String userName, @RequestParam String password) throws InvalidLoginException {
+			Object user = template.getForObject("http://localhost:8883/users/validateLogin?userName=" + userName + "&password=" + password, Object.class);
+			return user;
 		}
 		
-		//http://localhost:8881/front/add
+		//http://localhost:8880/front/add
 		@PostMapping(value = "/add")
 		Book addBook(@RequestBody Book b) {
 			return template.postForObject("http://localhost:8881/book/add", b, Book.class);
@@ -64,9 +74,9 @@ public class FrontController {
 		}
 
 		// http://localhost:8880/front/delete/{bookId}
-		@GetMapping(value = "/delete/{bookId}")
-		boolean deleteABook(@PathVariable int bookId) throws BookNotFoundException {
-			return template.getForObject("http://localhost:8881/book/delete/{bookId}", boolean.class);
+		@GetMapping(value = "/delete")
+		boolean deleteABook(@RequestParam int bookId) throws BookNotFoundException {
+			return template.getForObject("http://localhost:8881/book/delete?bookId=" + bookId, boolean.class);
 		}
 		
 		//http://localhost:8880/front/borrow?bookId=1&studentId=1
@@ -77,7 +87,7 @@ public class FrontController {
 		
 		//http://localhost:8880/front/return?transactionId=1&returnDate=2019/11/26
 		@GetMapping(value = "/return")
-		Transactions returnABook(@RequestParam int transactionId, @RequestParam(value = "returnDate") @DateTimeFormat(pattern = "yyyy-MM-dd") Date returnDate) throws BookAlreadyReturnedException {
+		Transactions returnABook(@RequestParam int transactionId, @RequestParam String returnDate) throws BookAlreadyReturnedException, ParseException {
 			return template.getForObject("http://localhost:8882/transaction/return?transactionId=" + transactionId + "&returnDate=" + returnDate, Transactions.class);
 		}
 		
