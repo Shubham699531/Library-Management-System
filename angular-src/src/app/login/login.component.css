@@ -1,0 +1,9 @@
+.bgimg {
+    background-image: url('src/assets/img/home.jpg');
+    height: 600px;
+    width: 100%;
+    margin: 0;
+}
+input[placeholder]{
+    font-style: italic;
+}
