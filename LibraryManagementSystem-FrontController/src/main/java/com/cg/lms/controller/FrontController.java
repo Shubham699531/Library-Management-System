@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
 import com.cg.lms.dto.Book;
+import com.cg.lms.dto.CustomLoginObject;
 import com.cg.lms.dto.Librarian;
 import com.cg.lms.dto.Student;
 import com.cg.lms.dto.Transactions;
@@ -41,17 +42,20 @@ public class FrontController {
 	
 	//http://localhost:8880/front/register
 		@PostMapping(value = "/register")
-		Student registerStudent(@RequestBody Student s) {
-			return template.postForObject("http://localhost:8883/users/register", s, Student.class);
+		Student registerStudent(@RequestBody Student student) {
+			return template.postForObject("http://localhost:8883/users/register", student, Student.class);
 		}
 		
-		//Object class not taking both the objects of Librarian as well as Student
-		//Problem needs to be solved..
+		//http://localhost:8880/front/registerLib
+		@PostMapping(value = "/registerLib")
+		Librarian registerLibrarian(@RequestBody Librarian librarian) {
+			return template.postForObject("http://localhost:8883/users/registerLib", librarian, Librarian.class);
+		}
 		
 		//http://localhost:8880/front/validateLogin?userName=1&password="XYZ"
 		@GetMapping(value = "/validateLogin")
-		Object validateStudentLogin(@RequestParam String userName, @RequestParam String password) throws InvalidLoginException {
-			Object user = template.getForObject("http://localhost:8883/users/validateLogin?userName=" + userName + "&password=" + password, Object.class);
+		CustomLoginObject validateStudentLogin(@RequestParam String userName, @RequestParam String password) throws InvalidLoginException {
+			CustomLoginObject user = template.getForObject("http://localhost:8883/users/validateLogin?userName=" + userName + "&password=" + password, CustomLoginObject.class);
 			return user;
 		}
 		

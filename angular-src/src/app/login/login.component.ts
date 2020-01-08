@@ -27,18 +27,17 @@ export class LoginComponent implements OnInit {
   }
 
   verifyLogin(){
-    this.router.navigate(['/student-dashboard']);
-    //this.service.verifyLogin(this.user).subscribe(data=>{this.login=data;
-      // if(this.login.librarian==null){
-      //   this.studentService.student = this.login.student;
-      //   this.router.navigate(['app-dashboard-student']);
-      // }
-      // else{
-      //   this.librarianService.librarian = this.login.librarian;
-      //   this.router.navigate(['app-dashboard-librarian']);
-      // }
+    this.service.verifyLogin(this.user).subscribe(data=>{this.login=data;
+       if(this.login.librarian==null){
+         this.studentService.student = this.login.student;
+         this.router.navigate(['student-dashboard']);
+       }
+       else{
+         this.librarianService.librarian = this.login.librarian;
+         this.router.navigate(['librarian-dashboard']);
+       }
       
-   // })
+    })
   }
 
 }

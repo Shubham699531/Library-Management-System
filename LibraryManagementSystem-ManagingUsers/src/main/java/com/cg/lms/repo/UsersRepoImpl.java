@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.cg.lms.AES.AES;
+import com.cg.lms.dto.CustomLoginObject;
 import com.cg.lms.dto.Librarian;
 import com.cg.lms.dto.Login;
 import com.cg.lms.dto.Student;
@@ -36,16 +37,21 @@ public class UsersRepoImpl implements UsersRepo{
 	}
 
 	@Override
-	public Object validateLogin(String userName, String password) throws InvalidLoginException {
+	public CustomLoginObject validateLogin(String userName, String password) throws InvalidLoginException {
 		 try {
+			 CustomLoginObject custom = new CustomLoginObject();
 			Login login = mgr.createNamedQuery("validateLogin", Login.class).setParameter("userName", AES.encrypt(userName, key)).setParameter("password", AES.encrypt(password, key)).getSingleResult();
 			if(login.getRole().equalsIgnoreCase("student")) {
 				Student student = mgr.createNamedQuery("returnStudentByUserName", Student.class).setParameter("userName", userName).getSingleResult();
-				return student;
+				custom.setStudent(student);
+				custom.setLibrarian(null);
+				return custom;
 			}
 			else {
 				Librarian librarian = mgr.createNamedQuery("returnLibrarianByUserName", Librarian.class).setParameter("userName", userName).getSingleResult();
-				return librarian;
+				custom.setLibrarian(librarian);
+				custom.setStudent(null);
+				return custom;
 			}
 		} catch (NoResultException e) {
 			throw new InvalidLoginException("Invalid login credentials.");

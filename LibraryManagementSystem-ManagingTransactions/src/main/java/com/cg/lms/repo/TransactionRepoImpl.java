@@ -6,7 +6,9 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 import javax.persistence.EntityManager;
@@ -71,14 +73,20 @@ public class TransactionRepoImpl implements TransactionRepo {
 						Date dateOfIssue = new Date();
 						transaction.setDateOfIssue(dateOfIssue);
 						StringBuilder sb = new StringBuilder();
-						if (s.getIntrests() != null) {
-							// Appending interests of the student based on the books
-							// he borrows, can be used in FRONT END for better results
-							sb.append(s.getIntrests() + " " + b.getBookGenre());
-						} else {
-							sb.append(b.getBookGenre());
+						Set<String> interests = new HashSet<String>();
+						interests.add(b.getBookGenre());
+						for(String interest: interests) {
+							sb.append(interest + " ");
 						}
 						s.setIntrests(sb.toString());
+//						if (s.getIntrests() != null) {
+//							// Appending interests of the student based on the books
+//							// he borrows, can be used in FRONT END for better results
+//							sb.append(s.getIntrests() + " " + b.getBookGenre());
+//						} else {
+//							sb.append(b.getBookGenre());
+//						}
+//						s.setIntrests(sb.toString());
 						transaction.setStudent(s);
 
 						b.setNoOfCopies((b.getNoOfCopies() - 1));
