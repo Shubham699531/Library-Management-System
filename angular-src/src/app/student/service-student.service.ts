@@ -15,7 +15,7 @@ export class ServiceStudentService {
   }
 
   registerStudent(newStudent:Student){
-    return this.http.post("http://localhost:8880/front/registerLib", newStudent);
+    return this.http.post("http://localhost:8880/front/register", newStudent);
   }
 
   // viewListOfBooks(){
@@ -26,12 +26,20 @@ export class ServiceStudentService {
     return this.http.get<Book[]>("http://localhost:8880/front/search?something=" + something);
   }
 
+  borrowABook(bookId:number){
+    return this.http.get<Transaction>("http://localhost:8880/front/borrow?bookId=" + bookId + "&studentId=" + this.student.studentId );
+  }
+
+  returnABook(){
+    return this.http.get<Transaction>("http://localhost:8880/front/return?transactionId=1&returnDate=2019/11/26");
+  }
+
   studentsTakingThisBook(bookId:number){
     return this.http.get<Student[]>("http://localhost:8880/front/getListOfStudents?bookId="+ +bookId);
   }
 
-  whichBooksTakenByMe(studentId:number){
-    return this.http.get<Book[]>("http://localhost:8880/front/search?something=" + studentId);
+  whichBooksTakenByMe(){
+    return this.http.get<Book[]>("http://localhost:8880/front/getListOfBooks?studentId=" + this.student.studentId);
   }
 
   // listOfMyPreviousTransactions(){
