@@ -215,4 +215,9 @@ public class TransactionRepoImpl implements TransactionRepo {
 		return listOfStudents;
 	}
 
+	@Override
+	public List<Transactions> listAllTransactions() {
+		return mgr.createNamedQuery("viewAllTransactions", Transactions.class).getResultList();
+	}
+
 }

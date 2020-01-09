@@ -24,5 +24,7 @@ public interface TransactionRepo {
 	List<Book> getListOfBooksTakenByStudent(int studentId);
 	
 	List<Student> getListOfPeopleTakingABook(int bookId);
+	
+	List<Transactions> listAllTransactions();
 
 }

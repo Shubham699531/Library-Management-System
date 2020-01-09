@@ -112,5 +112,11 @@ public class FrontController {
 		List<Student> getListOfPeopleTakingABook(@RequestParam int bookId){
 			return Arrays.asList(template.getForObject("http://localhost:8882/transaction/getListOfStudents?bookId=" + bookId, Student[].class));
 		}
+		
+		//http://localhost:8880/front/listAllTransactions
+		@GetMapping(value = "listAllTransactions")
+		public List<Transactions> listAllTransactions() {
+			return Arrays.asList(template.getForObject("http://localhost:8882/transaction/listAll", Transactions[].class));
+		}
 	
 }

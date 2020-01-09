@@ -1,62 +1,112 @@
-<form (ngSubmit)= 'addLibrarian()' #addForm="ngForm">
-  <div class="form-group">
-    <label>Enter Your Name</label><br>
-    <input type="text" [(ngModel)]=librarian.name name="name" placeholder="Enter your name" pattern="[a-zA-Z]{5,15}" #name=ngModel class="form-control" required>
-    <span *ngIf = "name.touched && name.invalid && (name.errors.required || name.errors.pattern)" class="alert-warning"> 
-      Invalid name or name cannot be empty</span>
-      <hr>
+<div class="bgimg" >
+  <div class="card" style="width: 50%; position: absolute; top: 100px ; left:300px; right: 300px; background-color: rgba(222, 222, 222, .5); border-radius: 10px;">
+      <div class="card-body">
+        <!-- <h5 class="card-title" style="text-align: center; font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;" >Regestration Form</h5> -->
+        <div class="row">
+          <div class="col-xs-2"></div>
+          <div class="col-xs-8">
+<div class="container">
+  <div class="row">
+    <div class="col-xs-1"></div>
+    <div class="col-xs-8">
+      <h2>Regestration Form</h2>
+    </div>
+    <div class="col-xs-3"></div>
   </div>
+</div>
+<div class="row">
+  <div class="col-xs-2">
+  </div>
+  <div class="col-xs-8">
+    <form (ngSubmit)='addLibrarian()' #addForm="ngForm">
+      <div class="form-group">
+        <label>Enter Your Name</label><br>
+        <input type="text" [(ngModel)]=librarian.name name="name" placeholder="Enter your name" pattern="[a-zA-Z]{5,15}"
+          #name=ngModel class="form-control" required>
+        <span *ngIf="name.touched && name.invalid && (name.errors.required || name.errors.pattern)"
+          class="alert-warning">
+          Invalid name or name cannot be empty</span>
+        <hr>
+      </div>
 
-  <div class="form-group">
-    <label>Enter Your Date Of Birth</label><br>
-    <input type="date" [(ngModel)]=librarian.dob name="dob" #dob = ngModel  required>
-    <span *ngIf = "dob.touched && dob.invalid && (dob.errors.required)" class="alert-warning"> 
-      Invalid contact or contact cannot be empty</span>
-      <hr>
-  </div>
+      <div class="form-group">
+        <label>Enter Your Date Of Birth</label><br>
+        <input type="date" [(ngModel)]=librarian.dob name="dob" #dob=ngModel required>
+        <span *ngIf="dob.touched && dob.invalid && (dob.errors.required)" class="alert-warning">
+          Invalid contact or contact cannot be empty</span>
+        <hr>
+      </div>
 
-  <div class="form-group">
-    <label>Enter Your Contact</label><br>
-    <input type="text" [(ngModel)]=librarian.contactNo name="contact" placeholder="9876543210" #contact = ngModel pattern="[7-9][0-9]{9}" required>
-    <span *ngIf = "contact.touched && contact.invalid && (contact.errors.required || contact.errors.pattern)" class="alert-warning"> 
-      Invalid contact or contact cannot be empty</span>
-      <hr>
-  </div>
+      <div class="form-group">
+        <label>Enter Your Contact</label><br>
+        <input type="text" [(ngModel)]=librarian.contactNo name="contact" placeholder="9876543210" #contact=ngModel
+          pattern="[7-9][0-9]{9}" required>
+        <span *ngIf="contact.touched && contact.invalid && (contact.errors.required || contact.errors.pattern)"
+          class="alert-warning">
+          Invalid contact or contact cannot be empty</span>
+        <hr>
+      </div>
 
-  <div class="form-group">
-    <label>Enter Your E-Mail</label><br>
-    <input type="email" [(ngModel)]=librarian.email name="email" placeholder="abc@gmail.com" #email= ngModel pattern="[a-z]+@[a-z]+.[a-z]{3,}" required>
-    <span *ngIf = "email.touched && email.invalid && (email.errors.required || email.errors.pattern)" class="alert-warning"> 
-      Invalid email or email cannot be empty</span>
-      <hr>
-  </div>
+      <div class="form-group">
+        <label>Enter Your E-Mail</label><br>
+        <input type="email" [(ngModel)]=librarian.email name="email" placeholder="abc@gmail.com" #email=ngModel
+          pattern="[a-z]+@[a-z]+.[a-z]{3,}" required>
+        <span *ngIf="email.touched && email.invalid && (email.errors.required || email.errors.pattern)"
+          class="alert-warning">
+          Invalid email or email cannot be empty</span>
+        <hr>
+      </div>
 
-  <div class="form-group">
-    <label>Enter Your Username</label><br>
-    <input type="text" [(ngModel)]=librarian.userName name="username" placeholder="your username" #userName = ngModel pattern="[a-z]{5,}" required>
-    <span *ngIf = "userName.touched && userName.invalid && (userName.errors.required || userName.errors.pattern)" class="alert-warning"> 
-      Invalid userName or userName cannot be empty</span>
-      <hr>
-  </div>
+      <div class="form-group">
+        <label>Your Experience(in years)</label><br>
+        <input type="number" [(ngModel)]=librarian.yearsOfExperience name="experience" placeholder="your experience(in years)" #experience=ngModel required>
+        <span *ngIf="experience.touched && experience.invalid && (experience.errors.required || experience.errors.pattern)"
+          class="alert-warning">
+          Invalid Years Of Experience</span>
+        <hr>
+      </div>
 
-  <div class="form-group">
-    <label>Enter Your Password</label><br>
-    <input type="password" [(ngModel)]=librarian.password name="password" placeholder="your password" #password = ngModel pattern="[a-z0-9]{5,}" required>
-    <span *ngIf = "password.touched && password.invalid && (password.errors.required || password.errors.pattern)" class="alert-warning"> 
-      Invalid password or password cannot be empty</span>
-      <hr>
-  </div>
+      <div class="form-group">
+        <label>Enter Your Username</label><br>
+        <input type="text" [(ngModel)]=librarian.userName name="username" placeholder="your username" #userName=ngModel
+          pattern="[a-z]{5,}" required>
+        <span *ngIf="userName.touched && userName.invalid && (userName.errors.required || userName.errors.pattern)"
+          class="alert-warning">
+          Invalid userName or userName cannot be empty</span>
+        <hr>
+      </div>
 
-  <div class="form-group">
-    <label>Confirm Your Password</label><br>
-    <input type="password" [(ngModel)]=confirmPassword name="cpassword" placeholder="confirm your password" #cpassword = ngModel pattern="[a-z0-9]{5,}" required>
-    <span *ngIf = correct class="alert-warning"> 
-      Passwords do not match</span>
-      <hr>
-  </div>
+      <div class="form-group">
+        <label>Enter Your Password</label><br>
+        <input type="password" [(ngModel)]=librarian.password name="password" placeholder="your password"
+          #password=ngModel pattern="[a-z0-9]{5,}" required>
+        <span *ngIf="password.touched && password.invalid && (password.errors.required || password.errors.pattern)"
+          class="alert-warning">
+          Invalid password or password cannot be empty</span>
+        <hr>
+      </div>
 
-  <div class="form-group">
-    <br>
-    <button class="btn btn-success" type="submit" [disabled] = "!addForm.valid">Become A Part</button>
+      <div class="form-group">
+        <label>Confirm Your Password</label><br>
+        <input type="password" [(ngModel)]=confirmPassword name="cpassword" placeholder="confirm your password"
+          #cpassword=ngModel pattern="[a-z0-9]{5,}" required>
+        <span *ngIf=correct class="alert-warning">
+          Passwords do not match</span>
+        <hr>
+      </div>
+
+      <div class="form-group">
+        <br>
+        <button class="btn btn-success" type="submit" [disabled]="!addForm.valid">Become A Part</button>
+      </div>
+    </form>
   </div>
-</form>
+  <div class="col-xs-2"></div>
+</div>
+
+ </div>
+<div class="col-xs-2"></div>
+</div>
+</div>
+</div>
+</div> 

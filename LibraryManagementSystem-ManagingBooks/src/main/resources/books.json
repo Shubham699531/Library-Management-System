@@ -2,79 +2,79 @@
 	{
 		"bookName": "To Kill A MockingBird",
 		"bookGenre": "Humour",
-		"bookPrice": "250",
+		"bookPrice": 250,
 		"isbn": "ASDF123",
 		"bookStatus": "available",
 		"bookAuthor": "Harper Lee",
 		"bookDescription": "Published in 1960, this timeless classic explores human behaviour and the collective conscience of The Deep South in the early 20th century. Humour entwines the delicate strands of prejudice, hatred, hypocrisy, love and innocence to create one of the best novels ever written.",
-		"noOfPages": "328",
-		"noOfCopies": "5"
+		"noOfPages": 328,
+		"noOfCopies": 5
 	},
 	{
 		"bookName": "1984",
 		"bookGenre": "Fiction",
-		"bookPrice": "350",
+		"bookPrice": 350,
 		"isbn": "ASDF1234",
 		"bookStatus": "available",
 		"bookAuthor": "George Orwell",
-		"bookDescription": "Although 1984 has passed us by, George Orwell’s dystopian, totalitarian world of control, fear and lies has never been more relevant. Delve into the life of Winston Smith as he struggles with his developing human nature in a world where individuality, freewill and love are forbidden.",
-		"noOfPages": "250",
-		"noOfCopies": "3"
+		"bookDescription": "Although 1984 has passed us by, George Orwells dystopian, totalitarian world of control, fear and lies has never been more relevant. Delve into the life of Winston Smith as he struggles with his developing human nature in a world where individuality, freewill and love are forbidden.",
+		"noOfPages": 250,
+		"noOfCopies": 3
 	},
 	{
-		"bookName": "Harry Potter And The Philosopher's Stone",
+		"bookName": "Harry Potter And The Philosophers Stone",
 		"bookGenre": "Fiction",
-		"bookPrice": "400",
+		"bookPrice": 400,
 		"isbn": "ASDF12345",
 		"bookStatus": "available",
 		"bookAuthor": "J.K Rowling",
-		"bookDescription": "I’m willing to bet you’ve heard of Harry Potter, but have you read the books? Join Harry Potter as he begins his journey into the world of magic, where he is the celebrated Boy Who Lived. Visit Hogwarts, meet your favourite characters and watch Harry grow into the one of the most famous literary characters in the world.",
-		"noOfPages": "450",
-		"noOfCopies": "6"
+		"bookDescription": "I am willing to bet youve heard of Harry Potter, but have you read the books? Join Harry Potter as he begins his journey into the world of magic, where he is the celebrated Boy Who Lived. Visit Hogwarts, meet your favourite characters and watch Harry grow into the one of the most famous literary characters in the world.",
+		"noOfPages": 450,
+		"noOfCopies": 6
 	},
 	{
 		"bookName": "Lord Of The Rings",
 		"bookGenre": "Fiction",
-		"bookPrice": "300",
+		"bookPrice": 300,
 		"isbn": "ASDF123456",
 		"bookStatus": "available",
 		"bookAuthor": "J.R.R Tolkien",
-		"bookDescription": "Middle Earth is a wonderful, expansive fantasy world filled with turmoil, heroes, evil and innocence. Although our protagonist Frodo Baggins’ quest seems impossible to complete, this trilogy is a tale of triumph in the most impossible circumstances.",
-		"noOfPages": "650",
-		"noOfCopies": "1"
+		"bookDescription": "Middle Earth is a wonderful, expansive fantasy world filled with turmoil, heroes, evil and innocence. Although our protagonist Frodo Baggins quest seems impossible to complete, this trilogy is a tale of triumph in the most impossible circumstances.",
+		"noOfPages": 650,
+		"noOfCopies": 1
 	},
 	{
 		"bookName": "Pride And Prejudice",
 		"bookGenre": "Love",
-		"bookPrice": "300",
+		"bookPrice": 300,
 		"isbn": "ASDF1234567",
 		"bookStatus": "available",
 		"bookAuthor": "Jane Austen",
 		"bookDescription": "One of the most famous novels of all time, Pride And Prejudice details the courtship of two opposed characters in a world where manners and courtesy are of the utmost importance.",
-		"noOfPages": "220",
-		"noOfCopies": "10"
+		"noOfPages": 220,
+		"noOfCopies": 10
 	},
 	{
 		"bookName": "The Book Thief",
 		"bookGenre": "Crime",
-		"bookPrice": "310",
+		"bookPrice": 310,
 		"isbn": "ASDF123456789",
 		"bookStatus": "available",
 		"bookAuthor": "Marcus Zusak",
 		"bookDescription": "Set in Germany during 1939, The Book Thief follows Liesel as she rescues books from the tyranny of Nazi rule. Meanwhile, her family has hidden a Jewish fighter in their basement and death looks down on the family, narrating our tale. Experience bravery that is rarely found in the world, and friendship that is formed in the most unlikely of situations.",
-		"noOfPages": "380",
-		"noOfCopies": "4"
+		"noOfPages": 380,
+		"noOfCopies": 4
 	},
 	{
 		"bookName": "The Girl With The Dragon Tattoo",
 		"bookGenre": "Mystery",
-		"bookPrice": "500",
+		"bookPrice": 500,
 		"isbn": "ASDF1234567890",
 		"bookStatus": "available",
 		"bookAuthor": "Stieg Larsson",
-		"bookDescription": "A run-away bestseller, it has everything a mystery requires. Murder, family ties, love in the air, and financial shenanigans. What happened to Harriet Vanger who disappeared forty years ago? Mikael Blomkvist, a disgraced journalist, and Lisbeth Salander, a tattooed and pierced hacker genius, are on the case. They uncover family iniquity and corruption at the top of Sweden’s industrial ladder.",
-		"noOfPages": "400",
-		"noOfCopies": "5"
+		"bookDescription": "A run-away bestseller, it has everything a mystery requires. Murder, family ties, love in the air, and financial shenanigans. What happened to Harriet Vanger who disappeared forty years ago? Mikael Blomkvist, a disgraced journalist, and Lisbeth Salander, a tattooed and pierced hacker genius, are on the case. They uncover family iniquity and corruption at the top of Swedens industrial ladder.",
+		"noOfPages": 400,
+		"noOfCopies": 5
 	}
 	
 ]

@@ -58,4 +58,10 @@ public class TransactionController {
 	List<Student> getListOfPeopleTakingABook(@RequestParam int bookId){
 		return repo.getListOfPeopleTakingABook(bookId);
 	}
+	
+	//http://localhost:8882/transaction/listAll
+	@GetMapping(value = "/listAll")
+	List<Transactions> viewAllTransactions(){
+		return repo.listAllTransactions();
+	}
 }

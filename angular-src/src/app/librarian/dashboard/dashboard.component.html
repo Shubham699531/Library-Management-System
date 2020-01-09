@@ -1,3 +1,28 @@
-<p>
-  dashboard works!
-</p>
+<div >
+  <table class="table table-bordered" >
+   <tr>
+     <th><h1>Your Details</h1></th>
+   </tr>
+   <tr>
+     <td>Name: </td>  <td> {{librarian.name}}</td>
+   </tr>
+   <tr>
+     <td>Date Of Birth: </td>  <td>{{librarian.dob | date:'dd/MM/yyyy'}}</td>
+   </tr>
+   <tr>
+     <td>Contact No.:</td>  <td> {{librarian.contactNo}}</td>
+   </tr>
+   <tr>
+     <td>Email: </td>  <td>{{librarian.email}}</td>
+   </tr>
+   <tr>
+     <td>User Name: </td>  <td>{{librarian.userName}}</td>
+   </tr>
+   <tr>
+     <td>Experience: </td>  <td>{{librarian.yearsOfExperience}}</td>
+   </tr>
+ </table>
+ </div>
+ <!-- <div>
+    <button class="btn btn-success" (click)="viewPastTrips()">Past Trips</button> 
+ </div> -->

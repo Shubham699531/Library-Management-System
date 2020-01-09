@@ -6,6 +6,8 @@ import { LibrarianDashboardComponent } from '../librarian/dashboard/dashboard.co
 import { CommonModule } from '@angular/common';
 import { LibrarianRegisterComponent } from '../librarian/register/register.component';
 import { StudentRegisterComponent } from '../student/register/register.component';
+import { ListBooksComponent } from '../librarian/list-books/list-books.component';
+import { TransactionsComponent } from '../librarian/transactions/transactions.component';
 
 const routes: Routes = [
   {path:"login", component:LoginComponent},
@@ -13,6 +15,8 @@ const routes: Routes = [
   {path:"student-register", component:StudentRegisterComponent},
   {path:"librarian-dashboard", component:LibrarianDashboardComponent},
   {path:"librarian-register", component:LibrarianRegisterComponent},
+  {path:"list-books", component:ListBooksComponent},
+  {path:"view-transactions", component:TransactionsComponent},
   // {path:"past-trips", component:PastTripsComponent},
   // {path:"logout", component:LogoutComponent},
   // {path:"about", component:AboutComponent},

@@ -26,7 +26,7 @@ public class Book {
 	private String bookStatus;
 	@Column(length = 50)
 	private String bookAuthor;
-	@Column(length = 50)
+	@Column(length = 5000)
 	private String bookDescription;
 	private int noOfPages;
 	private int noOfCopies;

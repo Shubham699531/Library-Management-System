@@ -26,7 +26,7 @@ export class LibrarianRegisterComponent implements OnInit {
       this.router.navigate(['/login']);
     }
     else{
-      this.librarian = new Librarian();
+      // this.librarian = new Librarian();
       this.correct=true;
     }
   }

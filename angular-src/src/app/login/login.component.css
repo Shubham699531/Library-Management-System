@@ -1,5 +1,6 @@
 .bgimg {
-    background-image: url('src/assets/img/home.jpg');
+    background-image: url('src/assets/img/home.jpeg');
+    opacity: 0.7;
     height: 600px;
     width: 100%;
     margin: 0;
