@@ -1,6 +1,8 @@
 package com.cg.lms.controller;
 
+import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Set;
 
@@ -84,6 +86,18 @@ public class BookController {
 			return true;
 		}
 	}
+	
+	//http://localhost:8881/book/getBooksByInterest
+	@GetMapping(value = "getBooksByInterest")
+	Set<Book> getBooksByInterest(@RequestParam String interest){
+		String[] interests = interest.split(" ");
+		Set<Book> booksBasedOnInterest = new HashSet<>();
+		for(String str:interests) {
+			booksBasedOnInterest = repo.findBookByGenre(str);
+		}
+		return booksBasedOnInterest;
+	}
+	
 	//http://localhost:8881/book/search
 	@GetMapping(value = "/search")
 	Set<Book> generalizedSearch(@RequestParam String something) throws BookNotFoundException{

@@ -3,6 +3,7 @@ import { Book } from 'src/app/models/book.model';
 import { ServiceStudentService } from '../service-student.service';
 import { Router } from '@angular/router';
 import { Transaction } from 'src/app/models/transaction.model';
+import { ServiceLibrarianService } from 'src/app/librarian/service-librarian.service';
 
 @Component({
   selector: 'app-search-book',
@@ -11,7 +12,7 @@ import { Transaction } from 'src/app/models/transaction.model';
 })
 export class SearchBookComponent implements OnInit {
   books:Book[]=[];
-  searchTerm:string;
+  searchTerm:string="";
   message:string;
   book:Book;
   transaction:Transaction;
@@ -25,7 +26,12 @@ export class SearchBookComponent implements OnInit {
 
   onButtonClick(event,b){
     this.book=b;
+    console.log(this.book.bookName);
     this.studentService.borrowABook(+this.book.bookId).subscribe(data=>{this.transaction=data;
+      if(this.transaction!=null){
+        this.studentService.successfullyBorrowed=true;
+        this.router.navigate(['success-page']);
+      }  
     });
   }
 

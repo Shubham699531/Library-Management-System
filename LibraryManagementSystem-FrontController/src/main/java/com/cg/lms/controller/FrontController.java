@@ -115,8 +115,14 @@ public class FrontController {
 		
 		//http://localhost:8880/front/listAllTransactions
 		@GetMapping(value = "listAllTransactions")
-		public List<Transactions> listAllTransactions() {
+		List<Transactions> listAllTransactions() {
 			return Arrays.asList(template.getForObject("http://localhost:8882/transaction/listAll", Transactions[].class));
+		}
+		
+		////http://localhost:8880/book/getBooksByInterest
+		@GetMapping(value = "getBooksByInterests")
+		List<Book> getBooksByInterest(@RequestParam String interest){
+			return Arrays.asList(template.getForObject("http://localhost:8881/book/getBooksByInterest", Book[].class));	
 		}
 	
 }

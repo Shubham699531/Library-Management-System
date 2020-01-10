@@ -9,6 +9,8 @@ import { Transaction } from '../models/transaction.model';
 })
 export class ServiceStudentService {
   student:Student;
+  successfullyBorrowed:boolean=false;
+  successfullyReturned:boolean=false;
 
   constructor(private http:HttpClient) { 
     this.student= new Student();
@@ -30,8 +32,12 @@ export class ServiceStudentService {
     return this.http.get<Transaction>("http://localhost:8880/front/borrow?bookId=" + bookId + "&studentId=" + this.student.studentId );
   }
 
-  returnABook(){
-    return this.http.get<Transaction>("http://localhost:8880/front/return?transactionId=1&returnDate=2019/11/26");
+  // returnABook(){
+  //   return this.http.get<Transaction>("http://localhost:8880/front/return?transactionId=1&returnDate=2019/11/26");
+  // }
+
+  findBooksBasedOnInterest(interest:string){
+    return this.http.get<Book[]>("http://localhost:8880/book/getBooksByInterest?interest="+ +interest);
   }
 
   studentsTakingThisBook(bookId:number){

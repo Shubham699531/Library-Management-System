@@ -73,6 +73,7 @@ public class TransactionRepoImpl implements TransactionRepo {
 						Date dateOfIssue = new Date();
 						transaction.setDateOfIssue(dateOfIssue);
 						StringBuilder sb = new StringBuilder();
+//						Adding interests in a set
 						Set<String> interests = new HashSet<String>();
 						interests.add(b.getBookGenre());
 						for(String interest: interests) {

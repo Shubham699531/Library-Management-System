@@ -21,9 +21,29 @@
    <tr>
      <td>User Name: </td>  <td>{{student.userName}}</td>
    </tr>
-   <tr>
+   <!-- <tr>
      <td>Interests: </td>  <td>{{student.interests}}</td>
-   </tr>
+   </tr> -->
  </table>
  </div>
+
+ <div *ngIf=!noBooksFound><h1>Books based on your borrows</h1></div>
+ <div>
+  <table class="table table-bordered">
+    <tr><th colspan="5"></th><th colspan="2"><h1>List of Books</h1></th><th colspan="2"></th></tr>
+      <tr><th>Book Id</th><th>Name</th><th>Genre</th><th>Author</th><th>Price</th><th>ISBN</th><th>Brief Description</th><th>Copies Available</th><th>Status</th></tr>
+      <tr *ngFor="let b of books">
+        <td>{{b.bookId}}</td>
+        <td>{{b.bookName}}</td>
+        <td>{{b.bookGenre}}</td>
+        <td>{{b.bookAuthor}}</td>
+        <td>{{b.bookPrice}}</td>
+        <td>{{b.isbn}}</td>
+        <td>{{b.bookDescription}}</td>
+        <td>{{b.noOfCopies}}</td>
+        <td>{{b.bookStatus}}</td>
+      </tr>
+      <hr>
+    </table>
+</div>
 
