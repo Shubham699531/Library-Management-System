@@ -1,19 +1,11 @@
 package com.cg.lms.controller;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.format.annotation.DateTimeFormat.ISO;
-//import org.springframework.format.annotation.DateTimeFormat;
-//import org.springframework.format.annotation.DateTimeFormat.ISO;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -91,8 +83,8 @@ public class FrontController {
 		
 		//http://localhost:8880/front/return?transactionId=1&returnDate=2019/11/26
 		@GetMapping(value = "/return")
-		Transactions returnABook(@RequestParam int transactionId, @RequestParam String returnDate) throws BookAlreadyReturnedException, ParseException {
-			return template.getForObject("http://localhost:8882/transaction/return?transactionId=" + transactionId + "&returnDate=" + returnDate, Transactions.class);
+		Transactions returnABook(@RequestParam int studentId,@RequestParam int bookId, @RequestParam String returnDate) throws BookAlreadyReturnedException {
+			return template.getForObject("http://localhost:8882/transaction/return?studentId=" + studentId + "&bookId="+ bookId + "&returnDate=" + returnDate, Transactions.class);
 		}
 		
 		//http://localhost:8880/front/review?transactionId=1&review=XYZ
@@ -103,8 +95,8 @@ public class FrontController {
 		
 		//http://localhost:8880/front/getListOfBooks?studentId=1
 		@GetMapping(value = "/getListOfBooks")
-		List<Book> getListOfBooksTakenByStudent(@RequestParam int studentId){
-			return Arrays.asList(template.getForObject("http://localhost:8882/transaction/getListOfBooks?studentId=" + studentId, Book[].class));
+		List<Transactions> getListOfBooksTakenByStudent(@RequestParam int studentId){
+			return Arrays.asList(template.getForObject("http://localhost:8882/transaction/getListOfBooks?studentId=" + studentId, Transactions[].class));
 		}
 		
 		//http://localhost:8880/front/getListOfStudents?bookId=1

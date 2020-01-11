@@ -19,7 +19,7 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler{
 		BookAlreadyReturnedException.class})
 	@ResponseBody
 	public ResponseEntity<Object> handleBookCopiesNotAvailableException(
-			BookCopiesNotAvailableException ex){
+			Exception ex){
 		System.out.println("Exception: " + ex.getMessage());
 		return new ResponseEntity<>(ex.getMessage(),
 				HttpStatus.NOT_FOUND);

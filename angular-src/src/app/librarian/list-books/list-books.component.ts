@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ServiceLibrarianService } from '../service-librarian.service';
 import { Book } from 'src/app/models/book.model';
 import { Student } from 'src/app/models/student.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-list-books',
@@ -16,16 +17,22 @@ export class ListBooksComponent implements OnInit {
   noStudentHasTakenThisBook:boolean=false;
   message:string;
 
-  constructor(private librarianService:ServiceLibrarianService) { 
+  constructor(private librarianService:ServiceLibrarianService, private router:Router) { 
     this.book=new Book();
   }
 
   ngOnInit() {
-    this.librarianService.viewListOfBooks().subscribe(data=>{this.books=data;
-      if(this.books.length==0){
-        alert("No books yet!");
-      }
-    })
+    if(this.librarianService.librarian.userName!=undefined){
+      this.librarianService.viewListOfBooks().subscribe(data=>{this.books=data;
+        if(this.books.length==0){
+          alert("No books yet!");
+        }
+      })
+    }
+    else{
+      this.router.navigate(['login']);
+    }
+    
   }
 
   onItemClick(event, b){

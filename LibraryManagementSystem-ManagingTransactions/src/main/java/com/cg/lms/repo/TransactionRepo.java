@@ -19,9 +19,9 @@ public interface TransactionRepo {
 	
 	boolean reviewABook(int transactionId, String review);
 
-	Transactions returnABook(int transactionId, String returnDate) throws BookAlreadyReturnedException, ParseException;
+	Transactions returnABook(int studentId, int bookId, String returnDate) throws BookAlreadyReturnedException, ParseException;
 	
-	List<Book> getListOfBooksTakenByStudent(int studentId);
+	List<Transactions> getListOfBooksTakenByStudent(int studentId);
 	
 	List<Student> getListOfPeopleTakingABook(int bookId);
 	

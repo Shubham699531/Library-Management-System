@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ServiceLibrarianService } from '../service-librarian.service';
 import { Librarian } from 'src/app/models/librarian.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-dashboard-librarian',
@@ -10,12 +11,18 @@ import { Librarian } from 'src/app/models/librarian.model';
 export class LibrarianDashboardComponent implements OnInit {
   librarian:Librarian;
 
-  constructor(private librarianService:ServiceLibrarianService) {
+  constructor(private librarianService:ServiceLibrarianService, private router:Router) {
       this.librarian = new Librarian();
    }
 
   ngOnInit() {
-    this.librarian= this.librarianService.librarian;
+    if(this.librarianService.librarian.userName!=undefined){
+      this.librarian= this.librarianService.librarian;
+    }
+    else{
+      this.router.navigate(['login']);
+    }
+    
   }
 
 

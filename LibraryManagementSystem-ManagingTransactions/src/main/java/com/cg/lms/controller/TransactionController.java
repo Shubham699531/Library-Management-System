@@ -34,11 +34,10 @@ public class TransactionController {
 	Transactions borrowABook(@RequestParam int bookId, @RequestParam int studentId) throws BookCopiesNotAvailableException, SameBookAlreadyTakenException {
 		return repo.borrowABook(bookId, studentId);
 	}
-	//http://localhost:8882/transaction/return?transactionId=1&returnDate=2019/11/26
+	//http://localhost:8882/transaction/return?studentId=1&bookId=1&returnDate=2019/11/26
 	@GetMapping(value = "/return")
-	Transactions returnABook(@RequestParam int transactionId, @RequestParam String returnDate) throws BookAlreadyReturnedException, ParseException {
-		System.out.println(returnDate + " LL");
-		return repo.returnABook(transactionId, returnDate);
+	Transactions returnABook(@RequestParam int studentId, @RequestParam int bookId, @RequestParam String returnDate) throws BookAlreadyReturnedException, ParseException {
+		return repo.returnABook(studentId, bookId, returnDate);
 	}
 	
 	//http://localhost:8882/transaction/review?transactionId=1&review="XYZ"
@@ -49,7 +48,7 @@ public class TransactionController {
 	
 	//http://localhost:8882/transaction/getListOfBooks?studentId=1
 	@GetMapping(value = "/getListOfBooks")
-	List<Book> getListOfBooksTakenByStudent(@RequestParam int studentId){
+	List<Transactions> getListOfBooksTakenByStudent(@RequestParam int studentId){
 		return repo.getListOfBooksTakenByStudent(studentId);
 	}
 	

@@ -1,3 +1,30 @@
+<div *ngIf=bookBorrowedOrReturned>
+  <table class="table table-bordered" >
+    <tr>
+      <th><h1>Your Borrowing/Returning Details</h1></th>
+    </tr>
+    <tr>
+      <td>Transaction Id: </td>  <td> {{successfulTransaction.transactionId}}</td>
+    </tr>
+    <tr>
+      <td>Date of Issue:</td><td>{{successfulTransaction.dateOfIssue | date:'dd/MM/yyyy'}}</td>
+    </tr>
+    <tr>
+      <td>Date Of Return (without overdue): </td>  <td>{{successfulTransaction.dateOfReturn | date:'dd/MM/yyyy'}}</td>
+    </tr>
+    <tr>
+      <td>Amount:</td>  <td> {{successfulTransaction.amount}}</td>
+    </tr>
+    <tr>
+      <td>Book Name: </td>  <td>{{successfulTransaction.book.bookName}}</td>
+    </tr>
+    <tr>
+      <td>Book Genre: </td>  <td>{{successfulTransaction.book.bookGenre}}</td>
+    </tr>
+  </table>
+</div>
+<br>
+<br>
 <div>
   <h1>{{message}}</h1>
 </div>

@@ -16,6 +16,7 @@ import { ServiceLibrarianService } from '../librarian/service-librarian.service'
 export class LoginComponent implements OnInit {
   user:User;
   login:CustomLoginObject;
+  errorMsg: any;
 
   constructor(private service:LoginService, private router:Router, private studentService:ServiceStudentService
     , private librarianService:ServiceLibrarianService) { 
@@ -37,7 +38,8 @@ export class LoginComponent implements OnInit {
          this.router.navigate(['librarian-dashboard']);
        }
       
-    })
+    }, error=>{this.errorMsg=error;
+    this.user= new User()})
   }
 
 }

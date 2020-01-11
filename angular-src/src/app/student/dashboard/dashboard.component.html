@@ -26,24 +26,37 @@
    </tr> -->
  </table>
  </div>
-
- <div *ngIf=!noBooksFound><h1>Books based on your borrows</h1></div>
+<br>
+<br>
+ <div *ngIf=!noBooksFound><h2>Books You Have Read....</h2></div>
+ <div *ngIf=noBooksFound><h2>Get Started By Searching for your favorite book!!</h2></div>
  <div>
-  <table class="table table-bordered">
-    <tr><th colspan="5"></th><th colspan="2"><h1>List of Books</h1></th><th colspan="2"></th></tr>
-      <tr><th>Book Id</th><th>Name</th><th>Genre</th><th>Author</th><th>Price</th><th>ISBN</th><th>Brief Description</th><th>Copies Available</th><th>Status</th></tr>
-      <tr *ngFor="let b of books">
-        <td>{{b.bookId}}</td>
-        <td>{{b.bookName}}</td>
-        <td>{{b.bookGenre}}</td>
-        <td>{{b.bookAuthor}}</td>
-        <td>{{b.bookPrice}}</td>
-        <td>{{b.isbn}}</td>
-        <td>{{b.bookDescription}}</td>
-        <td>{{b.noOfCopies}}</td>
-        <td>{{b.bookStatus}}</td>
+  <table class="table table-bordered" *ngIf=!noBooksFound>
+      <tr><th>Book Id</th><th>Name</th><th>Genre</th><th>Author</th><th>Price</th><th>ISBN</th><th>Brief Description</th><th>Date of Issue</th><th>Date returned/to be returned</th><th>Amount Paid</th><th></th></tr>
+      <tr *ngFor="let b of transactions">
+        <td>{{b.book.bookId}}</td>
+        <td>{{b.book.bookName}}</td>
+        <td>{{b.book.bookGenre}}</td>
+        <td>{{b.book.bookAuthor}}</td>
+        <td>{{b.book.bookPrice}}</td>
+        <td>{{b.book.isbn}}</td>
+        <td>{{b.book.bookDescription}}</td>
+        <td>{{b.dateOfIssue | date:'dd/MM/yyyy'}}</td>
+        <td>{{b.dateOfReturn | date:'dd/MM/yyyy'}}</td>
+        <td>{{b.amount}}</td>
+
+        <td><button class="btn btn-success" [disabled]="b.transactionStatus=='closed'" (click)="onButtonClick($event, b.book)">Return This Book</button></td>
+        <!-- <td><input type="text" [(ngModel)]=returnDate name="dor" class="form-control" placeholder="Enter return date(in dd-MM-yyyy)" required></td> -->
       </tr>
       <hr>
     </table>
 </div>
+<!-- <div *ngIf=returnButtonClicked>
+  <label>Enter Return Date</label><br>
+  <input type="date" [(ngModel)]=returnDate name="dor" #dor=ngModel [max]="maxDate" [min]="minDate" class="form-control" required>
+  <span *ngIf="dor.touched && dor.invalid && (dor.errors.required)" class="alert-warning">
+    <p class="error-div" style="color:red " >Invalid Return Date</p></span> -->
+    <!-- Invalid contact or contact cannot be empty</span> -->
+  <!-- <hr>
+</div> -->
 

@@ -12,12 +12,17 @@ export class LibrarianRegisterComponent implements OnInit {
   librarian:Librarian;
   confirmPassword:string;
   correct:boolean=false;
+  maxDate: string;
+  minDate: string;
 
   constructor(private librarianService:ServiceLibrarianService, private router:Router) { 
     this.librarian = new Librarian();
   }
 
   ngOnInit() {
+    //Librarian age should be between 30 to 90 years
+    this.maxDate = new Date("1990-01-01").toISOString().split('T')[0];
+    this.minDate = new Date("1930-01-01").toISOString().split('T')[0];
   }
 
   addLibrarian(){

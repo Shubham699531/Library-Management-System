@@ -10,6 +10,7 @@ import { Router } from '@angular/router';
 })
 export class AppComponent {
   title = 'lms';
+  // studentHasLoggedIn:boolean=false;
 
   constructor(private studentService:ServiceStudentService, private librarianService:ServiceLibrarianService,
     private router:Router){
@@ -17,12 +18,14 @@ export class AppComponent {
   }
   logout(){
     if(this.studentService.student!=null){
+      // this.studentHasLoggedIn=true;
       this.studentService.student=null;
-      this.router.navigate(['']);
+      this.router.navigate(['login']);
     }
     else{
+      // this.studentHasLoggedIn=true;
       this.librarianService.librarian=null;
-      this.router.navigate(['']);
+      this.router.navigate(['login']);
     }
   }
 }

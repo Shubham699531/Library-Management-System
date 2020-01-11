@@ -12,12 +12,17 @@ export class StudentRegisterComponent implements OnInit {
   student:Student;
   confirmPassword:string;
   correct:boolean=false;
+  maxDate: string;
+  minDate: string;
 
   constructor(private studentService:ServiceStudentService, private router:Router) {
     this.student = new Student();
    }
 
   ngOnInit() {
+    //Student should be atleast 5 years old and at most 60 years old
+    this.maxDate = new Date("2015-01-01").toISOString().split('T')[0];
+    this.minDate = new Date("1960-01-01").toISOString().split('T')[0];
   }
 
   addStudent(){

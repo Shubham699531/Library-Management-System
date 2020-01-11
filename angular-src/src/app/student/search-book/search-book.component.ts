@@ -3,7 +3,6 @@ import { Book } from 'src/app/models/book.model';
 import { ServiceStudentService } from '../service-student.service';
 import { Router } from '@angular/router';
 import { Transaction } from 'src/app/models/transaction.model';
-import { ServiceLibrarianService } from 'src/app/librarian/service-librarian.service';
 
 @Component({
   selector: 'app-search-book',
@@ -11,39 +10,58 @@ import { ServiceLibrarianService } from 'src/app/librarian/service-librarian.ser
   styleUrls: ['./search-book.component.css']
 })
 export class SearchBookComponent implements OnInit {
-  books:Book[]=[];
-  searchTerm:string="";
-  message:string;
-  book:Book;
-  transaction:Transaction;
+  books: Book[] = [];
+  searchTerm: string="";
+  message: string;
+  book: Book;
+  transaction: Transaction;
+  isAStudent: boolean = false;
+  errorMsg: string;
 
-  constructor(private studentService:ServiceStudentService, private router:Router) {
+  constructor(private studentService: ServiceStudentService, private router: Router) {
     this.book = new Book();
-   }
+  }
 
   ngOnInit() {
+    this.studentService.searchForABook("").subscribe(data=>{this.books=data});
+   }
+
+  onButtonClick(event, b) {
+    if (this.studentService.student.userName!=undefined) {
+      this.book = b;
+      // console.log(this.book.bookName);
+      this.studentService.borrowABook(+this.book.bookId).subscribe(data => {
+      this.transaction = data;
+        if (this.transaction != null) {
+          this.studentService.currentTransaction = this.transaction;
+          this.studentService.successfullyBorrowed = true;
+          this.router.navigate(['success-page']);
+        }
+        else{
+          this.router.navigate(['success-page']);
+        }
+      }, error=>{this.errorMsg=error;});
+    }
+    else {
+      this.router.navigate(['login']);
+    }
+
   }
 
-  onButtonClick(event,b){
-    this.book=b;
-    console.log(this.book.bookName);
-    this.studentService.borrowABook(+this.book.bookId).subscribe(data=>{this.transaction=data;
-      if(this.transaction!=null){
-        this.studentService.successfullyBorrowed=true;
-        this.router.navigate(['success-page']);
-      }  
-    });
-  }
-
-  search(){
-    if(this.searchTerm.length==0 || this.searchTerm.length>=3){
-      this.studentService.searchForABook(this.searchTerm).subscribe(data=>{this.books=data;
+  search() {
+    if (this.searchTerm=="" || this.searchTerm.length >= 3) {
+      this.message="";
+      this.studentService.searchForABook(this.searchTerm).subscribe(data => {
+        if(this.studentService.student.userName!=undefined){
+          this.isAStudent = true;
+        }  
+      this.books = data;
       })
     }
-    else{
-      this.message="Please enter atleast three letters to customize your search."
+    else {
+      this.message = "Please enter atleast three letters to customize your search."
     }
-    
+
   }
 
 }

@@ -10,22 +10,23 @@
     <div class="col-xs-1"></div>
     <div class="col-xs-8">
       <h2>Regestration Form</h2>
+      <br>
     </div>
     <div class="col-xs-3"></div>
   </div>
 </div>
 <div class="row">
-  <div class="col-xs-2">
+  <div class="col-xs-1">
   </div>
-  <div class="col-xs-8">
+  <div class="col-xs-9">
     <form (ngSubmit)='addStudent()' #addForm="ngForm">
       <div class="form-group">
         <label>Enter Your Name</label><br>
-        <input type="text" [(ngModel)]=student.name name="name" placeholder="Enter your name" pattern="[a-zA-Z]{5,15}"
+        <input type="text" [(ngModel)]=student.name name="name" placeholder="e.g. Sherlock Holmes" pattern="[a-zA-Z_ ]{5,15}"
           #name=ngModel class="form-control" required>
         <span *ngIf="name.touched && name.invalid && (name.errors.required || name.errors.pattern)"
           class="alert-warning">
-          Invalid name or name cannot be empty</span>
+          <p class="error-div" style="color:red " >Invalid Name. Promise, we won't make fun of your name.</p></span>
         <hr>
       </div>
 
@@ -39,64 +40,64 @@
 
       <div class="form-group">
         <label>Enter Your Date Of Birth</label><br>
-        <input type="date" [(ngModel)]=student.dob name="dob" #dob=ngModel required>
+        <input type="date" [(ngModel)]=student.dob name="dob" #dob=ngModel [max]="maxDate" [min]="minDate" class="form-control" required>
         <span *ngIf="dob.touched && dob.invalid && (dob.errors.required)" class="alert-warning">
-          Invalid contact or contact cannot be empty</span>
+          <p class="error-div" style="color:red " >Invalid Date Of Birth. Come On, Stop being immortal.</p></span>
+          <!-- Invalid contact or contact cannot be empty</span> -->
         <hr>
       </div>
 
       <div class="form-group">
         <label>Enter Your Contact</label><br>
-        <input type="text" [(ngModel)]=student.contactNo name="contact" placeholder="9876543210" #contact=ngModel
-          pattern="[7-9][0-9]{9}" required>
+        <input type="text" [(ngModel)]=student.contactNo name="contact" class="form-control" placeholder="9876543210" #contact=ngModel
+        pattern="[7-9][0-9]{9}" required>
         <span *ngIf="contact.touched && contact.invalid && (contact.errors.required || contact.errors.pattern)"
           class="alert-warning">
-          Invalid contact or contact cannot be empty</span>
+          <p class="error-div" style="color:red " >Invalid Contact Number. Promise, we won't spam you.</p></span>
         <hr>
       </div>
 
       <div class="form-group">
         <label>Enter Your E-Mail</label><br>
-        <input type="email" [(ngModel)]=student.email name="email" placeholder="abc@gmail.com" #email=ngModel
-          pattern="[a-z]+@[a-z]+.[a-z]{3,}" required>
+        <input type="email" [(ngModel)]=student.email name="email" class="form-control" placeholder="lmslover@mail.com" #email=ngModel
+        pattern="[a-z0-9]+@[a-z]+.[a-z]{3,5}" required>
         <span *ngIf="email.touched && email.invalid && (email.errors.required || email.errors.pattern)"
           class="alert-warning">
-          Invalid email or email cannot be empty</span>
+          <p class="error-div" style="color:red " >Invalid E-mail. Again promise, we won't spam you.</p></span>
         <hr>
       </div>
 
       <div class="form-group">
         <label>Enter Your Username</label><br>
-        <input type="text" [(ngModel)]=student.userName name="username" placeholder="your username" #userName=ngModel
+        <input type="text" [(ngModel)]=student.userName name="username" class="form-control" placeholder="your username" #userName=ngModel
           pattern="[a-z]{5,}" required>
         <span *ngIf="userName.touched && userName.invalid && (userName.errors.required || userName.errors.pattern)"
           class="alert-warning">
-          Invalid userName or userName cannot be empty</span>
+          <p class="error-div" style="color:red " >Invalid Username. Please enter 5 or more characters.</p></span>
         <hr>
       </div>
 
       <div class="form-group">
         <label>Enter Your Password</label><br>
-        <input type="password" [(ngModel)]=student.password name="password" placeholder="your password"
-          #password=ngModel pattern="[a-z0-9]{5,}" required>
+        <input type="password" [(ngModel)]=student.password name="password" class="form-control" placeholder="e.g. aZ0@!_$" #password = ngModel pattern="[A-Za-z0-9@_!$]{8,15}" required>
         <span *ngIf="password.touched && password.invalid && (password.errors.required || password.errors.pattern)"
           class="alert-warning">
-          Invalid password or password cannot be empty</span>
+          <p class="error-div" style="color:red " >Invalid Password. Grow up from <i>abcd</i></p></span>
         <hr>
       </div>
 
       <div class="form-group">
         <label>Confirm Your Password</label><br>
-        <input type="password" [(ngModel)]=confirmPassword name="cpassword" placeholder="confirm your password"
-          #cpassword=ngModel pattern="[a-z0-9]{5,}" required>
+        <input type="password" [(ngModel)]=confirmPassword class="form-control" name="cpassword" placeholder="confirm your password"
+          #cpassword=ngModel pattern="[A-Za-z0-9@_!$]{8,15}" required>
         <span *ngIf=correct class="alert-warning">
-          Passwords do not match</span>
+          <p class="error-div" style="color:red " >Passwords do not match. Concentrate please.</p></span>
         <hr>
       </div>
 
       <div class="form-group">
         <br>
-        <button class="btn btn-success" type="submit" [disabled]="!addForm.valid">Become A Part</button>
+        <button class="btn btn-success" type="submit" [disabled]="!addForm.valid">Join Us</button>
       </div>
     </form>
   </div>

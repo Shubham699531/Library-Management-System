@@ -124,13 +124,13 @@ public class TransactionRepoImpl implements TransactionRepo {
 	}
 
 	@Override
-	public Transactions returnABook(int transactionId, String rd) throws BookAlreadyReturnedException, ParseException {
+	public Transactions returnABook(int studentId, int bookId, String rd) throws BookAlreadyReturnedException, ParseException {
 		Transactions transaction = null;
 		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
 		Date returnDate = sdf.parse(rd);
 		try {
-			transaction = mgr.createNamedQuery("findTransactionById", Transactions.class)
-					.setParameter("transactionId", transactionId).getSingleResult();
+			transaction = mgr.createNamedQuery("findTransactionByStudentAndBookId", Transactions.class)
+					.setParameter("studentId", studentId).setParameter("bookId", bookId).getSingleResult();
 
 			Date dateOfIssue = transaction.getDateOfIssue();
 
@@ -188,18 +188,18 @@ public class TransactionRepoImpl implements TransactionRepo {
 	}
 
 	@Override
-	public List<Book> getListOfBooksTakenByStudent(int studentId) {
+	public List<Transactions> getListOfBooksTakenByStudent(int studentId) {
 		// get all transactions involving a particular student
 		List<Transactions> listOfAllTransactions = mgr
 				.createNamedQuery("getListOfBooksTakenByStudent", Transactions.class)
 				.setParameter("studentId", studentId).getResultList();
-		List<Book> listOfBooks = new ArrayList<>();
-		
-		//Getting list of books for a particular student
-		for (Transactions txn : listOfAllTransactions) {
-			listOfBooks.add(txn.getBook());
-		}
-		return listOfBooks;
+//		List<Book> listOfBooks = new ArrayList<>();
+//		
+//		//Getting list of books for a particular student
+//		for (Transactions txn : listOfAllTransactions) {
+//			listOfBooks.add(txn.getBook());
+//		}
+		return listOfAllTransactions;
 	}
 
 	@Override
