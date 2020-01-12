@@ -17,14 +17,14 @@ export class AppComponent {
 
   }
   logout(){
-    if(this.studentService.student!=null){
+    if(this.studentService.student.userName!=undefined){
       // this.studentHasLoggedIn=true;
-      this.studentService.student=null;
+      this.studentService.student.userName=undefined;
       this.router.navigate(['login']);
     }
-    else{
+    else if(this.librarianService.librarian.userName!=undefined){
       // this.studentHasLoggedIn=true;
-      this.librarianService.librarian=null;
+      this.librarianService.librarian.userName=undefined;
       this.router.navigate(['login']);
     }
   }

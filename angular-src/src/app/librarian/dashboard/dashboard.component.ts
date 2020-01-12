@@ -25,5 +25,16 @@ export class LibrarianDashboardComponent implements OnInit {
     
   }
 
+  routeToAddBook(){
+    this.router.navigate(['add-book']);
+  }
+
+  routeToListBooks(){
+    this.router.navigate(['list-books']);
+  }
+
+  viewAllTransactions(){
+    this.router.navigate(['view-transactions']);
+  }
 
 }

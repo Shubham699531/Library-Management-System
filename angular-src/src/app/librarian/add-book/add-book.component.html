@@ -1,0 +1,121 @@
+<div class="bgimg" >
+  <div class="card" style="width: 50%; position: absolute; top: 100px ; left:300px; right: 300px; background-color: rgba(222, 222, 222, .5); border-radius: 10px;">
+      <div class="card-body">
+        <!-- <h5 class="card-title" style="text-align: center; font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;" >Regestration Form</h5> -->
+        <div class="row">
+          <div class="col-xs-2"></div>
+          <div class="col-xs-8">
+<div class="container">
+  <div class="row">
+    <div class="col-xs-1"></div>
+    <div class="col-xs-8">
+      <h2>Add New Book</h2>
+      <br>
+    </div>
+    <div class="col-xs-3"></div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-xs-1">
+  </div>
+  <div class="col-xs-9">
+    <form (ngSubmit)='addBook()' #addForm="ngForm">
+      <div class="form-group">
+        <label>Book Name</label><br>
+        <input type="text" [(ngModel)]=book.name name="name" placeholder="e.g. Sherlock Holmes" pattern="[a-zA-Z_ ]{5,50}"
+          #name=ngModel class="form-control" required>
+        <span *ngIf="name.touched && name.invalid && (name.errors.required || name.errors.pattern)"
+          class="alert-warning">
+          <p class="error-div" style="color:red " >Invalid Book Name.</p></span>
+        <hr>
+      </div>
+
+      <div class="from-group">
+        <label>Genre </label><br>
+        <select class='form-control' name="experience" [(ngModel)]=book.bookGenre #genre=ngModel required>
+          <option value='Fiction'>Fiction</option>
+          <option value='Drama'>Drama</option>
+          <option value='Mythology'>Mythology</option>
+          <option value='Romance'>Romance</option>
+          <option value='Mystery'>Mystery</option>
+          <option value='Other'>Autobiography</option>
+        </select>
+        <span *ngIf="genre.touched && genre.invalid && (genre.errors.required)"
+          class="alert-warning">
+          <p class="error-div" style="color:red " >Genre required.</p></span>
+        <hr>
+      </div>
+      
+      <div class="form-group">
+        <label>Author </label><br>
+        <input type="text" [(ngModel)]=book.bookAuthor name="author" class="form-control" placeholder="Jeff Welder" #author=ngModel
+          pattern="[A-Za-z_ ]{5,}" required>
+        <span *ngIf="author.touched && author.invalid && (author.errors.required || author.errors.pattern)"
+          class="alert-warning">
+          <p class="error-div" style="color:red " >Invalid Author Name.</p></span>
+        <hr>
+      </div>
+
+      <div class="form-group">
+        <label>Description</label><br>
+        <input type="text" [(ngModel)]=book.bookDescription name="description" class="form-control" placeholder="something awesome about the book" #description = ngModel pattern="[A-Za-z0-9. ]{8,500}" required>
+        <span *ngIf="description.touched && description.invalid && (description.errors.required || description.errors.pattern)"
+          class="alert-warning">
+          <p class="error-div" style="color:red " >Invalid Description. Grow up from <i>abcd</i></p></span>
+        <hr>
+      </div>
+
+      <div class="form-group">
+        <label>Price </label><br>
+        <input type="number" [(ngModel)]=book.bookPrice name="price" class="form-control" placeholder="120" #price=ngModel required>
+        <span *ngIf="price.touched && price.invalid && (price.errors.required || price.errors.pattern)"
+          class="alert-warning">
+          <p class="error-div" style="color:red " >Invalid Price.</p></span>
+        <hr>
+      </div>
+
+      <div class="form-group">
+        <label> ISBN</label><br>
+        <input type="text" [(ngModel)]=book.isbn name="isbn" class="form-control" placeholder="ABCD123" #isbn=ngModel
+        pattern="[a-zA-Z0-9]{1,20}" required>
+        <span *ngIf="isbn.touched && isbn.invalid && (isbn.errors.required || isbn.errors.pattern)"
+          class="alert-warning">
+          <p class="error-div" style="color:red " >Invalid ISBN.</p></span>
+        <hr>
+      </div>
+
+      
+
+      <div class="form-group">
+        <label>Number of Pages </label><br>
+        <input type="number" [(ngModel)]=book.noOfPages name="pages" class="form-control" placeholder="120" #pages=ngModel required>
+        <span *ngIf="pages.touched && pages.invalid && (pages.errors.required || pages.errors.pattern)"
+          class="alert-warning">
+          <p class="error-div" style="color:red " >Invalid Number of Pages.</p></span>
+        <hr>
+      </div>
+
+      <div class="form-group">
+        <label>Number of copies available </label><br>
+        <input type="number" [(ngModel)]=book.noOfCopies name="copies" class="form-control" placeholder="120" #copies=ngModel required>
+        <span *ngIf="copies.touched && copies.invalid && (copies.errors.required || copies.errors.pattern)"
+          class="alert-warning">
+          <p class="error-div" style="color:red " >Invalid Number of Copies.</p></span>
+        <hr>
+      </div>
+
+      <div class="form-group">
+        <br>
+        <button class="btn btn-success" type="submit" [disabled]="!addForm.valid">Add This Book</button>
+      </div>
+    </form>
+  </div>
+  <div class="col-xs-2"></div>
+</div>
+
+ </div>
+<div class="col-xs-2"></div>
+</div>
+</div>
+</div>
+</div> 

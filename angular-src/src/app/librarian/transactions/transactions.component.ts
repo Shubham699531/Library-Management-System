@@ -26,4 +26,8 @@ export class TransactionsComponent implements OnInit {
     
   }
 
+  goBack(){
+    this.router.navigate(['librarian-dashboard']);
+  }
+
 }

@@ -23,7 +23,7 @@ public interface TransactionRepo {
 	
 	List<Transactions> getListOfBooksTakenByStudent(int studentId);
 	
-	List<Student> getListOfPeopleTakingABook(int bookId);
+	List<Transactions> getListOfPeopleTakingABook(int bookId);
 	
 	List<Transactions> listAllTransactions();
 

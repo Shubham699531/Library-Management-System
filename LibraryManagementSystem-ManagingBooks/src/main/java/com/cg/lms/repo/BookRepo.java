@@ -1,5 +1,6 @@
 package com.cg.lms.repo;
 
+import java.util.List;
 //import java.util.List;
 import java.util.Set;
 
@@ -8,6 +9,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.cg.lms.dto.Book;
+import com.cg.lms.dto.Transactions;
 
 @Repository
 public interface BookRepo extends JpaRepository<Book, Integer>{

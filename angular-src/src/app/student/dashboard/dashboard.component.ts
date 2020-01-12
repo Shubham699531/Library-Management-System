@@ -76,4 +76,8 @@ export class StudentDashboardComponent implements OnInit {
 
   }
 
+  searchNewBooks(){
+    this.router.navigate(['search-book']);
+  }
+
 }

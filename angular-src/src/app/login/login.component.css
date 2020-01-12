@@ -8,3 +8,15 @@
 input[placeholder]{
     font-style: italic;
 }
+
+.card-title{
+    color: aliceblue;
+}
+
+.userName{
+    color: aliceblue;
+}
+
+.password{
+    color: aliceblue;
+}

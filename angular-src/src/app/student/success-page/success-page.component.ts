@@ -39,4 +39,8 @@ export class SuccessPageComponent implements OnInit {
     
   }
 
+  goBack(){
+    this.router.navigate(['student-dashboard']);
+  }
+
 }

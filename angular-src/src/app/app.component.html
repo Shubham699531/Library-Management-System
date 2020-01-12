@@ -1,7 +1,7 @@
  <nav class="navbar navbar-inverse" style="margin: 0;">
   <div class="container-fluid">
     <div class="navbar-header">
-      <a class="navbar-brand">LMS-APP!</a>
+      <a href="#" class="navbar-brand">LMS-APP!</a>
     </div>
   <ul class="nav navbar-nav">
     <li ><a [routerLink]="['login']">Login</a></li>
@@ -15,9 +15,22 @@
     <!-- <li class><a [routerLink]="['logout']">Logout</a></li> -->
     
   </ul>
+  <div class="logoutButton">
   <ul class="nav navbar-nav navbar-right">
     <button class="btn btn-warning" (click)="logout()">Logout</button>
     </ul>
   </div>
+  </div>
  </nav>
   <router-outlet></router-outlet>
+
+    <div class="navbar navbar-default navbar-fixed-bottom">
+      <div class="container">
+        <p class="navbar-text pull-left">© Library Management App 2020 - Site Built By Shubham &nbsp; &nbsp;
+             <a href="#" >About Us</a>
+        </p>
+  
+        <a href="#" class="navbar-btn btn-warning btn pull-right">
+        <span class="glyphicon glyphicon-star"></span>  Subscribe To Our News Letter</a>
+      </div>
+  </div>

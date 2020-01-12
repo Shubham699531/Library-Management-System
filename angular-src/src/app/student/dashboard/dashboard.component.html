@@ -1,7 +1,7 @@
 <div >
   <table class="table table-bordered" >
    <tr>
-     <th><h1>Your Details</h1></th>
+     <th><h1>Your Details</h1></th><th class="searchButton"><button class="btn btn-success" name="searchBooks" (click)="searchNewBooks()">Search Books</button></th>
    </tr>
    <tr>
      <td>Name: </td>  <td> {{student.name}}</td>
@@ -21,9 +21,7 @@
    <tr>
      <td>User Name: </td>  <td>{{student.userName}}</td>
    </tr>
-   <!-- <tr>
-     <td>Interests: </td>  <td>{{student.interests}}</td>
-   </tr> -->
+ 
  </table>
  </div>
 <br>
@@ -45,18 +43,11 @@
         <td>{{b.dateOfReturn | date:'dd/MM/yyyy'}}</td>
         <td>{{b.amount}}</td>
 
-        <td><button class="btn btn-success" [disabled]="b.transactionStatus=='closed'" (click)="onButtonClick($event, b.book)">Return This Book</button></td>
+        <td class="returnBookButton"><button class="btn btn-success" [disabled]="b.transactionStatus=='closed'" (click)="onButtonClick($event, b.book)">Return This Book</button></td>
         <!-- <td><input type="text" [(ngModel)]=returnDate name="dor" class="form-control" placeholder="Enter return date(in dd-MM-yyyy)" required></td> -->
       </tr>
       <hr>
     </table>
 </div>
-<!-- <div *ngIf=returnButtonClicked>
-  <label>Enter Return Date</label><br>
-  <input type="date" [(ngModel)]=returnDate name="dor" #dor=ngModel [max]="maxDate" [min]="minDate" class="form-control" required>
-  <span *ngIf="dor.touched && dor.invalid && (dor.errors.required)" class="alert-warning">
-    <p class="error-div" style="color:red " >Invalid Return Date</p></span> -->
-    <!-- Invalid contact or contact cannot be empty</span> -->
-  <!-- <hr>
-</div> -->
+
 

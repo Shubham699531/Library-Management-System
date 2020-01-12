@@ -15,8 +15,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cg.lms.dto.Book;
+import com.cg.lms.dto.Transactions;
+import com.cg.lms.exception.BookAlreadyTakenBySomeoneException;
 import com.cg.lms.exception.BookNotFoundException;
 import com.cg.lms.repo.BookRepo;
+import com.cg.lms.repo.TransactionRepo;
 
 /**
  * 
@@ -29,6 +32,9 @@ public class BookController {
 
 	@Autowired
 	private BookRepo repo;
+	
+	@Autowired
+	private TransactionRepo txnrepo;
 
 	/**
 	 * 
@@ -59,11 +65,6 @@ public class BookController {
 			throw new BookNotFoundException("Book not found with id: " + bookId);
 		}
 		return book;
-//		if (book == null) {
-//			throw new BookNotFoundException("Book not found with id: " + bookId);
-//		} else {
-//			return book;
-//		}
 	}
 
 
@@ -72,11 +73,18 @@ public class BookController {
 	 * @param bookId
 	 * @return
 	 * @throws BookNotFoundException
+	 * @throws BookAlreadyTakenBySomeoneException 
 	 */
-	// http://localhost:8881/book/delete/{bookId}
+	// http://localhost:8881/book/delete?bookId=1
 	@GetMapping(value = "/delete")
-	boolean deleteABook(@RequestParam int bookId) throws BookNotFoundException {
+	boolean deleteABook(@RequestParam int bookId) throws BookNotFoundException, BookAlreadyTakenBySomeoneException {
 		Book b = getBookById(bookId);
+		List<Transactions> transactions = txnrepo.findTransactionByBookId(bookId);
+		for(Transactions txn:transactions) {
+			if(txn.getTransactionStatus().equalsIgnoreCase("open")) {
+				throw new BookAlreadyTakenBySomeoneException("Book has already been taken by someone.");
+			}
+		}
 		if (b == null || b.getBookStatus().equalsIgnoreCase("removed")) {
 			System.out.println("Book: " + b.getBookName() + " already removed!");
 			return false;

@@ -10,6 +10,7 @@ import { ListBooksComponent } from '../librarian/list-books/list-books.component
 import { TransactionsComponent } from '../librarian/transactions/transactions.component';
 import { SearchBookComponent } from '../student/search-book/search-book.component';
 import { SuccessPageComponent } from '../student/success-page/success-page.component';
+import { AddBookComponent } from '../librarian/add-book/add-book.component';
 
 const routes: Routes = [
   {path:"login", component:LoginComponent},
@@ -21,9 +22,7 @@ const routes: Routes = [
   {path:"view-transactions", component:TransactionsComponent},
   {path:"search-book", component:SearchBookComponent},
   {path:"success-page", component:SuccessPageComponent},
-  // {path:"past-trips", component:PastTripsComponent},
-  // {path:"logout", component:LogoutComponent},
-  // {path:"about", component:AboutComponent},
+  {path:"add-book", component:AddBookComponent},
   {path: "", redirectTo:"/login", pathMatch:"full"},
   {path:"**", redirectTo:"/login", pathMatch:"full"}
 ];

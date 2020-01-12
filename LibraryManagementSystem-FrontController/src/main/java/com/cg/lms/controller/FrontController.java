@@ -19,6 +19,7 @@ import com.cg.lms.dto.Librarian;
 import com.cg.lms.dto.Student;
 import com.cg.lms.dto.Transactions;
 import com.cg.lms.exception.BookAlreadyReturnedException;
+import com.cg.lms.exception.BookAlreadyTakenBySomeoneException;
 import com.cg.lms.exception.BookCopiesNotAvailableException;
 import com.cg.lms.exception.BookNotFoundException;
 import com.cg.lms.exception.InvalidLoginException;
@@ -69,9 +70,9 @@ public class FrontController {
 			return Arrays.asList(template.getForObject("http://localhost:8881/book/search?something=" + something, Book[].class));
 		}
 
-		// http://localhost:8880/front/delete/{bookId}
+		// http://localhost:8880/front/delete?bookId=1
 		@GetMapping(value = "/delete")
-		boolean deleteABook(@RequestParam int bookId) throws BookNotFoundException {
+		boolean deleteABook(@RequestParam int bookId) throws BookNotFoundException,BookAlreadyTakenBySomeoneException {
 			return template.getForObject("http://localhost:8881/book/delete?bookId=" + bookId, boolean.class);
 		}
 		
@@ -101,8 +102,8 @@ public class FrontController {
 		
 		//http://localhost:8880/front/getListOfStudents?bookId=1
 		@GetMapping(value = "/getListOfStudents")
-		List<Student> getListOfPeopleTakingABook(@RequestParam int bookId){
-			return Arrays.asList(template.getForObject("http://localhost:8882/transaction/getListOfStudents?bookId=" + bookId, Student[].class));
+		List<Transactions> getListOfPeopleTakingABook(@RequestParam int bookId){
+			return Arrays.asList(template.getForObject("http://localhost:8882/transaction/getListOfStudents?bookId=" + bookId, Transactions[].class));
 		}
 		
 		//http://localhost:8880/front/listAllTransactions

@@ -1,13 +1,12 @@
 <div>
   <table class="table table-bordered">
-    <tr><th>List of Books</th></tr>
-      <tr><th>Transaction Id</th><th>Date of Issue</th><th>Date of Return</th><th>Amount</th><th>Review</th><th>Status</th><th>Book Name</th><th>Copies Left</th><th>Student Name</th></tr>
+    <tr><th colspan="2"></th><th colspan="4"><h1>List of Transactions</h1></th><th class="back-button" colspan="2"><button class="btn btn-success" name="backButton" (click)="goBack()">Go Back</button></th></tr>
+      <tr><th>Transaction Id</th><th>Date of Issue</th><th>Date of Return</th><th>Amount</th><th>Status</th><th>Book Name</th><th>Copies Left</th><th>Student Name</th></tr>
       <tr *ngFor="let t of transactions">
         <td>{{t.transactionId}}</td>
         <td>{{t.dateOfIssue | date:'dd/MM/yyyy'}}</td>
         <td>{{t.dateOfReturn | date:'dd/MM/yyyy'}}</td>
         <td>{{t.amount}}</td>
-        <th>{{t.review}}</th>
         <td>{{t.transactionStatus}}</td>
         <td>{{t.book.bookName}}</td>
         <td>{{t.book.noOfCopies}}</td>

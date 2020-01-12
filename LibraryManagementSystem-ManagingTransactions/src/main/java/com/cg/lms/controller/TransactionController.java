@@ -54,7 +54,7 @@ public class TransactionController {
 	
 	//http://localhost:8882/transaction/getListOfStudents?bookId=1
 	@GetMapping(value = "/getListOfStudents")
-	List<Student> getListOfPeopleTakingABook(@RequestParam int bookId){
+	List<Transactions> getListOfPeopleTakingABook(@RequestParam int bookId){
 		return repo.getListOfPeopleTakingABook(bookId);
 	}
 	

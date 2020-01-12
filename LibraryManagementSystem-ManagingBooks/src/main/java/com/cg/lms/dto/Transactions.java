@@ -8,10 +8,12 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
 
 @Entity
 @SequenceGenerator(name = "txn_id_gen", sequenceName = "txn_id_gen", allocationSize = 1)
+@NamedQuery(name = "Transactions.findTransactionByBookId", query = "FROM Transactions WHERE book.bookId=:bookId")
 public class Transactions {
 	
 	@Id

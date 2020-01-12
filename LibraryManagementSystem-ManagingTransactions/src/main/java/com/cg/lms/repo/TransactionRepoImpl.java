@@ -203,17 +203,17 @@ public class TransactionRepoImpl implements TransactionRepo {
 	}
 
 	@Override
-	public List<Student> getListOfPeopleTakingABook(int bookId) {
+	public List<Transactions> getListOfPeopleTakingABook(int bookId) {
 		List<Transactions> listOfAllTransactions = mgr
 				.createNamedQuery("getListOfPeopleTakingABook", Transactions.class).setParameter("bookId", bookId)
 				.getResultList();
-		List<Student> listOfStudents = new ArrayList<>();
-		//Getting list of people taking a particular book, can be used to DEFINE POPULARITY OF BOOK
-		//in frontend
-		for (Transactions txn : listOfAllTransactions) {
-			listOfStudents.add(txn.getStudent());
-		}
-		return listOfStudents;
+//		List<Student> listOfStudents = new ArrayList<>();
+//		//Getting list of people taking a particular book, can be used to DEFINE POPULARITY OF BOOK
+//		//in frontend
+//		for (Transactions txn : listOfAllTransactions) {
+//			listOfStudents.add(txn.getStudent());
+//		}
+		return listOfAllTransactions;
 	}
 
 	@Override

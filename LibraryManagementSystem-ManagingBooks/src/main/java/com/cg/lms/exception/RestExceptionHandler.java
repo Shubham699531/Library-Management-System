@@ -15,10 +15,10 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 @RestController
 public class RestExceptionHandler extends ResponseEntityExceptionHandler{
 	
-	@ExceptionHandler(BookNotFoundException.class)
+	@ExceptionHandler({BookNotFoundException.class, BookAlreadyTakenBySomeoneException.class})
 	@ResponseBody
 	public ResponseEntity<Object> handleBookNotFoundException(
-			BookNotFoundException ex){
+			Exception ex){
 		System.out.println("Exception: " + ex.getMessage());
 		return new ResponseEntity<>(ex.getMessage(),
 				HttpStatus.NOT_FOUND);
