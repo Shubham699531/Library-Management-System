@@ -39,6 +39,10 @@ import com.cg.lms.exception.SameBookAlreadyTakenException;
 @RequestMapping(value = "/front")
 @CrossOrigin(origins = "http://localhost:4200")
 public class FrontController {
+	final String serverIp="localhost";
+	final String bookMicroserviceUrl="http://" + serverIp + ":8881/book";
+	final String transactionMicroserviceUrl="http://" + serverIp + ":8882/transaction";
+	final String userMicroserviceUrl="http://" + serverIp + ":8883/users";
 	
 	//Autowiring Rest Template for communicating between microservices.
 	@Autowired
@@ -52,7 +56,7 @@ public class FrontController {
 	//http://localhost:8880/front/register
 		@PostMapping(value = "/register")
 		Student registerStudent(@RequestBody Student student) {
-			return template.postForObject("http://localhost:8883/users/register", student, Student.class);
+			return template.postForObject(userMicroserviceUrl + "/register", student, Student.class);
 		}
 		
 		/**
@@ -63,7 +67,7 @@ public class FrontController {
 		//http://localhost:8880/front/registerLib
 		@PostMapping(value = "/registerLib")
 		Librarian registerLibrarian(@RequestBody Librarian librarian) {
-			return template.postForObject("http://localhost:8883/users/registerLib", librarian, Librarian.class);
+			return template.postForObject(userMicroserviceUrl +"/registerLib", librarian, Librarian.class);
 		}
 		
 		/**
@@ -77,7 +81,7 @@ public class FrontController {
 		//http://localhost:8880/front/validateLogin?userName=1&password="XYZ"
 		@GetMapping(value = "/validateLogin")
 		CustomLoginObject validateStudentLogin(@RequestParam String userName, @RequestParam String password) throws InvalidLoginException {
-			CustomLoginObject user = template.getForObject("http://localhost:8883/users/validateLogin?userName=" + userName + "&password=" + password, CustomLoginObject.class);
+			CustomLoginObject user = template.getForObject(userMicroserviceUrl + "/validateLogin?userName=" + userName + "&password=" + password, CustomLoginObject.class);
 			return user;
 		}
 		
@@ -89,7 +93,7 @@ public class FrontController {
 		//http://localhost:8880/front/add
 		@PostMapping(value = "/add")
 		Book addBook(@RequestBody Book b) {
-			return template.postForObject("http://localhost:8881/book/add", b, Book.class);
+			return template.postForObject(bookMicroserviceUrl + "/add", b, Book.class);
 		}
 
 		/**
@@ -102,7 +106,7 @@ public class FrontController {
 		// http://localhost:8880/front/getById?bookId=1
 		@GetMapping(value = "/getById")
 		Book getBookById(@RequestParam int bookId) throws BookNotFoundException {
-			return template.getForObject("http://localhost:8881/book/getById?bookId=" + bookId, Book.class);
+			return template.getForObject(bookMicroserviceUrl + "/getById?bookId=" + bookId, Book.class);
 		}
 
 		/**
@@ -115,7 +119,7 @@ public class FrontController {
 		// http://localhost:8880/front/search?something=xyz
 		@GetMapping(value = "/search")
 		List<Book> genralizedSearch(@RequestParam String something) throws BookNotFoundException {
-			return Arrays.asList(template.getForObject("http://localhost:8881/book/search?something=" + something, Book[].class));
+			return Arrays.asList(template.getForObject(bookMicroserviceUrl + "/search?something=" + something, Book[].class));
 		}
 
 		/**
@@ -130,7 +134,7 @@ public class FrontController {
 		// http://localhost:8880/front/delete?bookId=1
 		@GetMapping(value = "/delete")
 		boolean deleteABook(@RequestParam int bookId) throws BookNotFoundException,BookAlreadyTakenBySomeoneException {
-			return template.getForObject("http://localhost:8881/book/delete?bookId=" + bookId, boolean.class);
+			return template.getForObject(bookMicroserviceUrl + "/delete?bookId=" + bookId, boolean.class);
 		}
 		
 		/**
@@ -146,7 +150,7 @@ public class FrontController {
 		//http://localhost:8880/front/borrow?bookId=1&studentId=1
 		@GetMapping(value = "/borrow")
 		Transactions borrowABook(@RequestParam int bookId, @RequestParam int studentId) throws BookCopiesNotAvailableException, SameBookAlreadyTakenException {
-			return template.getForObject("http://localhost:8882/transaction/borrow?bookId=" + bookId + "&studentId=" + studentId, Transactions.class);
+			return template.getForObject(transactionMicroserviceUrl + "/borrow?bookId=" + bookId + "&studentId=" + studentId, Transactions.class);
 		}
 		
 		/**
@@ -161,7 +165,7 @@ public class FrontController {
 		//http://localhost:8880/front/return?studentId=1&bookId=1&returnDate=2019/11/26
 		@GetMapping(value = "/return")
 		Transactions returnABook(@RequestParam int studentId,@RequestParam int bookId, @RequestParam String returnDate) throws BookAlreadyReturnedException {
-			return template.getForObject("http://localhost:8882/transaction/return?studentId=" + studentId + "&bookId="+ bookId + "&returnDate=" + returnDate, Transactions.class);
+			return template.getForObject(transactionMicroserviceUrl + "/return?studentId=" + studentId + "&bookId="+ bookId + "&returnDate=" + returnDate, Transactions.class);
 		}
 		
 		/**
@@ -173,7 +177,7 @@ public class FrontController {
 		//http://localhost:8880/front/review?transactionId=1&review=XYZ
 		@GetMapping(value = "/review")
 		boolean reviewABook(@RequestParam int transactionId, @RequestParam String review) {
-			return template.getForObject("http://localhost:8882/transaction/review?transactionId=" + transactionId + "&review=" + review, boolean.class);
+			return template.getForObject(transactionMicroserviceUrl + "/review?transactionId=" + transactionId + "&review=" + review, boolean.class);
 		}
 		
 		/**
@@ -184,7 +188,7 @@ public class FrontController {
 		//http://localhost:8880/front/getListOfBooks?studentId=1
 		@GetMapping(value = "/getListOfBooks")
 		List<Transactions> getListOfBooksTakenByStudent(@RequestParam int studentId){
-			return Arrays.asList(template.getForObject("http://localhost:8882/transaction/getListOfBooks?studentId=" + studentId, Transactions[].class));
+			return Arrays.asList(template.getForObject(transactionMicroserviceUrl + "/getListOfBooks?studentId=" + studentId, Transactions[].class));
 		}
 		
 		/**
@@ -195,7 +199,7 @@ public class FrontController {
 		//http://localhost:8880/front/getListOfStudents?bookId=1
 		@GetMapping(value = "/getListOfStudents")
 		List<Transactions> getListOfPeopleTakingABook(@RequestParam int bookId){
-			return Arrays.asList(template.getForObject("http://localhost:8882/transaction/getListOfStudents?bookId=" + bookId, Transactions[].class));
+			return Arrays.asList(template.getForObject(transactionMicroserviceUrl + "/getListOfStudents?bookId=" + bookId, Transactions[].class));
 		}
 		
 		/**
@@ -205,7 +209,7 @@ public class FrontController {
 		//http://localhost:8880/front/listAllTransactions
 		@GetMapping(value = "listAllTransactions")
 		List<Transactions> listAllTransactions() {
-			return Arrays.asList(template.getForObject("http://localhost:8882/transaction/listAll", Transactions[].class));
+			return Arrays.asList(template.getForObject(transactionMicroserviceUrl + "/listAll", Transactions[].class));
 		}
 		
 		/**
@@ -216,12 +220,12 @@ public class FrontController {
 		//http://localhost:8880/front/getBooksByInterest?interest=abc
 		@GetMapping(value = "getBooksByInterests")
 		Set<Book> getBooksByInterest(@RequestParam String interest){
-			return template.getForObject("http://localhost:8881/book/getBooksByInterest?interest=" + interest, Set.class);	
+			return template.getForObject(bookMicroserviceUrl + "/getBooksByInterest?interest=" + interest, Set.class);	
 		}
 		
 		@GetMapping(value = "/viewPopularity")
 		List<CustomPopularityObject> viewPopularityOfBooks(){
-			return Arrays.asList(template.getForObject("http://localhost:8882/transaction/viewPopularity", CustomPopularityObject[].class));
+			return Arrays.asList(template.getForObject(transactionMicroserviceUrl + "/viewPopularity", CustomPopularityObject[].class));
 		}
 	
 }
