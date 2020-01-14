@@ -24,18 +24,36 @@ public class UsersController {
 	@Autowired
 	private UsersRepo repo;
 	
+	/**
+	 * 
+	 * @param s
+	 * @return the registered student details
+	 */
 	//http://localhost:8883/users/register
 	@PostMapping(value = "/register")
 	Student registerStudent(@RequestBody Student s){
 		return repo.registerStudent(s);
 	}
 	
+	/**
+	 * 
+	 * @param librarian
+	 * @return the registered librarian details
+	 */
 	//http://localhost:8883/users/registerLib
 		@PostMapping(value = "/registerLib")
 		Librarian registerLibrarian(@RequestBody Librarian librarian){
 			return repo.registerLibrarian(librarian);
 		}
-	
+		
+	/**
+	 * 
+	 * @param userName
+	 * @param password
+	 * @return object containing details of student or librarian, if login was successful
+	 * @throws InvalidLoginException
+	 * 			when login credentials are not correct
+	 */
 	//http://localhost:8883/users/validateLogin?userName=1&password="XYZ"
 	@GetMapping(value = "/validateLogin")
 	CustomLoginObject validateLogin(@RequestParam String userName, @RequestParam String password) throws InvalidLoginException {

@@ -70,7 +70,7 @@
       <div class="form-group">
         <label>Enter Your Username</label><br>
         <input type="text" [(ngModel)]=student.userName name="username" class="form-control" placeholder="your username" #userName=ngModel
-          pattern="[a-z]{5,}" required>
+          pattern="[a-z_]{5,}" required>
         <span *ngIf="userName.touched && userName.invalid && (userName.errors.required || userName.errors.pattern)"
           class="alert-warning">
           <p class="error-div" style="color:red " >Invalid Username. Please enter 5 or more characters.</p></span>

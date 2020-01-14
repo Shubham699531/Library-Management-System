@@ -1,4 +1,4 @@
-
+<!-- <app-header></app-header> -->
     <div class="bgimg" >
       <div class="card" style="width: 300px; position: absolute; top: 160px ; left:400px; background-color: rgba(0, 0, 0, 0.5); border-radius: 10px;">
           <div class="card-body">
@@ -9,14 +9,14 @@
                   <form (ngSubmit) = "verifyLogin()" #loginForm=ngForm>
                       <div class="form-group">
                         <label class="userName">User Name</label><br>
-                        <input class="form-control" type="text" #email=ngModel [(ngModel)]=user.userName name="email" placeholder="e.g. sherlock@gmail.com" >
-                        <span *ngIf="email.touched && email.invalid" class="alert-danger" style="text-align: center;">invalid email Id!</span>
+                        <input class="form-control" type="text" #email=ngModel [(ngModel)]=user.userName name="email" placeholder="e.g. sherlock" required>
+                        <!-- <span *ngIf="email.touched && email.invalid && (email.errors.required)" class="alert-danger" style="text-align: center;">invalid email Id!</span> -->
                         <br>
                       </div>
                       <div class="form-group">
                         <label class="password">Password</label>
-                        <input class="form-control" type="password" #password=ngModel [(ngModel)]=user.password name="password" placeholder="e.g. AZ@$1" >
-                        <span *ngIf="password.touched && password.invalid" class="alert-danger" style="text-align: center;">invalid password!</span>
+                        <input class="form-control" type="password" #password=ngModel [(ngModel)]=user.password name="password" placeholder="e.g. AZ@$1" required>
+                        <!-- <span *ngIf="password.touched && password.invalid && (password.errors.required)" class="alert-danger" style="text-align: center;">invalid password!</span> -->
                         <br>
                       </div>
                       <div class="form-group" >
@@ -24,7 +24,7 @@
                         <div class="row">
                           <div class="col-xs-9"></div>
                           <div class="col-xs-3">
-                              <button class="btn btn-success" type="submit" [disabled]="loginForm.invalid">Login</button>
+                              <button class="btn btn-success" type="submit" [disabled]="!loginForm.valid">Login</button>
                             </div>
                           </div>
                       </div>

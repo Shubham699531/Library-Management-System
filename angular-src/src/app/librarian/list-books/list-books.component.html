@@ -1,3 +1,4 @@
+<app-header></app-header>
 <div *ngIf=!itemClicked>
   <table class="table table-bordered">
     <tr><th colspan="5"></th><th colspan="2"><h1>List of Books</h1></th><th class="backButton" colspan="4"><button class="btn btn-success" name="backButton" (click)="goBack()">Go Back</button></th></tr>
@@ -13,11 +14,12 @@
         <td>{{b.noOfCopies}}</td>
         <td>{{b.bookStatus}}</td>
         <td><button name="delete book" class="btn btn-danger" (click)="deleteButtonClicked($event, b)">Delete Book</button></td>
-        <td><button name="view who has taken this book" class="btn btn-success" (click)="viewWhoHasTakenThisBook($event, b)">View Borrowed Students</button></td>
+        <td><button name="view who has taken this book" class="btn btn-success" (click)="viewWhoHasTakenThisBook($event, b)">View The Borrowers</button>
+        </td>
       </tr>
       <hr>
       <tr>
-        <th colspan="9" *ngIf=noStudentHasTakenThisBook><h2>{{message}}</h2></th>
+         <th colspan="9" *ngIf=noStudentHasTakenThisBook><h2>{{message}}</h2></th>
       </tr>
     </table>
 </div>

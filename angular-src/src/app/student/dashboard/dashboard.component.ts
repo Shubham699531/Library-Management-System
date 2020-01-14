@@ -19,6 +19,7 @@ export class StudentDashboardComponent implements OnInit {
   book: Book;
   transaction: Transaction;
   bookAlreadyReturned:boolean=false;
+  interestedBooks:Book[]=[];
   // returnButtonClicked:boolean=false;
   returnDate:string;
   i:number;
@@ -40,7 +41,11 @@ export class StudentDashboardComponent implements OnInit {
 
     if(this.studentService.student.userName!=undefined){
        this.student = this.studentService.student;
-      this.studentService.whichBooksTakenByMe().subscribe(data=>{this.transactions=data;
+       this.studentService.findBooksBasedOnInterest(this.student.intrests).subscribe(data=>{this.interestedBooks=data})
+       if(this.interestedBooks.length!=0){
+        this.noBooksFound=false;
+      }
+       this.studentService.whichBooksTakenByMe().subscribe(data=>{this.transactions=data;
       if(this.transactions.length!=0){
         this.noBooksFound=false;
       }

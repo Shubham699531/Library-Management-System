@@ -3,6 +3,7 @@ import { Book } from 'src/app/models/book.model';
 import { ServiceStudentService } from '../service-student.service';
 import { Router } from '@angular/router';
 import { Transaction } from 'src/app/models/transaction.model';
+import { CustomPopularityObject } from 'src/app/models/CustomPopularityObject.model';
 
 @Component({
   selector: 'app-search-book',
@@ -17,19 +18,20 @@ export class SearchBookComponent implements OnInit {
   transaction: Transaction;
   isAStudent: boolean = false;
   errorMsg: string;
+  popularityObjects:CustomPopularityObject[]=[];
 
   constructor(private studentService: ServiceStudentService, private router: Router) {
     this.book = new Book();
   }
 
   ngOnInit() {
+    this.studentService.viewWhichBookIsPopular().subscribe(data=>{this.popularityObjects=data});
     this.studentService.searchForABook("").subscribe(data=>{this.books=data});
    }
 
   onButtonClick(event, b) {
     if (this.studentService.student.userName!=undefined) {
       this.book = b;
-      // console.log(this.book.bookName);
       this.studentService.borrowABook(+this.book.bookId).subscribe(data => {
       this.transaction = data;
         if (this.transaction != null) {
@@ -63,5 +65,4 @@ export class SearchBookComponent implements OnInit {
     }
 
   }
-
 }

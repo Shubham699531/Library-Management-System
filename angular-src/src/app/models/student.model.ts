@@ -7,5 +7,5 @@ export class Student{
     email:string;
     userName:string;
     password:string;
-    interests:string;
+    intrests:string;
 }

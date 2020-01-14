@@ -10,36 +10,20 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
-@Order(Ordered.HIGHEST_PRECEDENCE)
-@ControllerAdvice
-@RestController
+@Order(Ordered.HIGHEST_PRECEDENCE) //Ordering priority while injecting this class as dependency
+@ControllerAdvice //for automatic scanning via Classpath Scanning 
+@RestController //Controller+ResponseBody
 public class RestExceptionHandler extends ResponseEntityExceptionHandler{
 	
 	@ExceptionHandler({BookCopiesNotAvailableException.class, SameBookAlreadyTakenException.class,
 		BookAlreadyReturnedException.class})
-	@ResponseBody
+	@ResponseBody //converts the return value into response body(optional at method level after Spring v4.0)
 	public ResponseEntity<Object> handleBookCopiesNotAvailableException(
 			Exception ex){
 		System.out.println("Exception: " + ex.getMessage());
+		//Creates a new Response Entity object, wraps exception message and HttpStatus
+				//of NOT_FOUND and returns it.
 		return new ResponseEntity<>(ex.getMessage(),
 				HttpStatus.NOT_FOUND);
 	}
-	
-//	@ExceptionHandler(SameBookAlreadyTakenException.class)
-//	@ResponseBody
-//	public ResponseEntity<Object> handleSameBookAlreadyTakenException(
-//			SameBookAlreadyTakenException ex){
-//		System.out.println("Exception: " + ex.getMessage());
-//		return new ResponseEntity<>(ex.getMessage(),
-//				HttpStatus.NOT_FOUND);
-//	}
-//	
-//	@ExceptionHandler(BookAlreadyReturnedException.class)
-//	@ResponseBody
-//	public ResponseEntity<Object> handleBookAlreadyReturnedException(
-//			BookAlreadyReturnedException ex){
-//		System.out.println("Exception: " + ex.getMessage());
-//		return new ResponseEntity<>(ex.getMessage(),
-//				HttpStatus.NOT_FOUND);
-//	}
 }

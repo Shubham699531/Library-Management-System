@@ -12,6 +12,7 @@ import { throwError } from 'rxjs';
 })
 export class ServiceLibrarianService {
   librarian:Librarian;
+  isLibrarianLoggedIn:boolean=false;
 
   constructor(private http:HttpClient) { 
     this.librarian = new Librarian();

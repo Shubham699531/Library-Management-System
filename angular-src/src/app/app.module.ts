@@ -16,6 +16,7 @@ import { NaviRoutingModule } from './navi/navi-routing.module';
 import { LibrarianRegisterComponent } from './librarian/register/register.component';
 import { LibrarianDashboardComponent } from './librarian/dashboard/dashboard.component';
 import { AddBookComponent } from './librarian/add-book/add-book.component';
+import { HeaderComponent } from './header/header.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { AddBookComponent } from './librarian/add-book/add-book.component';
     SuccessPageComponent,
     ListBooksComponent,
     TransactionsComponent,
-    AddBookComponent
+    AddBookComponent,
+    HeaderComponent
   ],
   imports: [
     BrowserModule, FormsModule, HttpClientModule, NaviRoutingModule

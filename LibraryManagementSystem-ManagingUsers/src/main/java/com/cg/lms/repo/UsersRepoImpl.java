@@ -25,15 +25,16 @@ public class UsersRepoImpl implements UsersRepo{
 	private EntityManager mgr;
 
 	@Override
-	public Student registerStudent(Student s){
+	public Student registerStudent(Student student){
 		Login login = new Login();
-		login.setUserName(AES.encrypt(s.getUserName(), key));
-		login.setPassword(AES.encrypt(s.getPassword(), key));
+		//Encrypting username and password before saving in database
+		login.setUserName(AES.encrypt(student.getUserName(), key));
+		login.setPassword(AES.encrypt(student.getPassword(), key));
 		login.setRole("student");
 		mgr.persist(login);
-		mgr.persist(s);
+		mgr.persist(student);
 
-		return s;
+		return student;
 	}
 
 	@Override
@@ -59,14 +60,15 @@ public class UsersRepoImpl implements UsersRepo{
 	}
 
 	@Override
-	public Librarian registerLibrarian(Librarian l) {
+	public Librarian registerLibrarian(Librarian librarian) {
 		Login login = new Login();
-		login.setUserName(AES.encrypt(l.getUserName(), key));
-		login.setPassword(AES.encrypt(l.getPassword(), key));
+		//Encrypting username and password before saving in database
+		login.setUserName(AES.encrypt(librarian.getUserName(), key));
+		login.setPassword(AES.encrypt(librarian.getPassword(), key));
 		login.setRole("librarian");
 		mgr.persist(login);
-		mgr.persist(l);
-		return l;
+		mgr.persist(librarian);
+		return librarian;
 	}
 
 	@Override

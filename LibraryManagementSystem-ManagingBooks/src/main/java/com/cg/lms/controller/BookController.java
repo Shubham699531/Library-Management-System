@@ -1,6 +1,5 @@
 package com.cg.lms.controller;
 
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -23,7 +22,9 @@ import com.cg.lms.repo.TransactionRepo;
 
 /**
  * 
- * @author Shubham
+ * @author s54
+ * @version 1.0
+ * @apiNote Controller for managing books which include add, remove, retrieve books. 
  *
  */
 @RestController
@@ -39,7 +40,7 @@ public class BookController {
 	/**
 	 * 
 	 * @param b
-	 * @return
+	 * @return the persisted book
 	 */
 	// http://localhost:8881/book/add
 	@PostMapping(value = "/add")
@@ -51,8 +52,9 @@ public class BookController {
 	/**
 	 * 
 	 * @param bookId
-	 * @return
+	 * @return book with the given Id
 	 * @throws BookNotFoundException
+	 * 		 when book with the given Id is not found
 	 */
 	// http://localhost:8881/book/getById?bookId=1
 	@GetMapping(value = "/getById")
@@ -71,9 +73,12 @@ public class BookController {
 	/**
 	 * 
 	 * @param bookId
-	 * @return
+	 * @return true, if book is removed successfully 
+	 * 			false, if book can't be removed
 	 * @throws BookNotFoundException
+	 * 			when book with given Id cannot be found
 	 * @throws BookAlreadyTakenBySomeoneException 
+	 * 			when an attempt is made to delete an already issued book
 	 */
 	// http://localhost:8881/book/delete?bookId=1
 	@GetMapping(value = "/delete")
@@ -95,17 +100,37 @@ public class BookController {
 		}
 	}
 	
+	/**
+	 * 
+	 * @param interest
+	 * @return list of books by interest
+	 */
 	//http://localhost:8881/book/getBooksByInterest
 	@GetMapping(value = "getBooksByInterest")
 	Set<Book> getBooksByInterest(@RequestParam String interest){
-		String[] interests = interest.split(" ");
 		Set<Book> booksBasedOnInterest = new HashSet<>();
-		for(String str:interests) {
-			booksBasedOnInterest = repo.findBookByGenre(str);
+		if(interest.contains("Love")) {
+			booksBasedOnInterest.addAll(repo.findBookByGenre("Love"));
+		}
+		if(interest.contains("Fiction")) {
+			booksBasedOnInterest.addAll(repo.findBookByGenre("Fiction"));
+		}
+		if(interest.contains("Crime")) {
+		booksBasedOnInterest.addAll(repo.findBookByGenre("Crime"));
+		}
+		if(interest.contains("Mystery")) {
+			booksBasedOnInterest.addAll(repo.findBookByGenre("Mystery"));
 		}
 		return booksBasedOnInterest;
 	}
 	
+	/**
+	 * 
+	 * @param something
+	 * @return set of results based on search 
+	 * @throws BookNotFoundException
+	 * 			when no results can be found
+	 */
 	//http://localhost:8881/book/search
 	@GetMapping(value = "/search")
 	Set<Book> generalizedSearch(@RequestParam String something) throws BookNotFoundException{

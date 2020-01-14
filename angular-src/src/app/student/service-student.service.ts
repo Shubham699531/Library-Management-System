@@ -6,6 +6,7 @@ import { Transaction } from '../models/transaction.model';
 import { Observable } from 'rxjs';
 import { throwError } from 'rxjs';
 import { retry, catchError } from 'rxjs/operators';
+import { CustomPopularityObject } from '../models/CustomPopularityObject.model';
 
 
 @Injectable({
@@ -16,6 +17,7 @@ export class ServiceStudentService {
   successfullyBorrowed:boolean=false;
   successfullyReturned:boolean=false;
   currentTransaction:Transaction;
+  isStudentLoggedIn:boolean=false;
 
   constructor(private http:HttpClient) { 
     this.student= new Student();
@@ -40,7 +42,7 @@ export class ServiceStudentService {
   }
 
   findBooksBasedOnInterest(interest:string){
-    return this.http.get<Book[]>("http://localhost:8880/book/getBooksByInterest?interest="+ +interest);
+    return this.http.get<Book[]>("http://localhost:8880/front/getBooksByInterests?interest=" + interest);
   }
 
   studentsTakingThisBook(bookId:number){
@@ -49,6 +51,10 @@ export class ServiceStudentService {
 
   whichBooksTakenByMe(){
     return this.http.get<Transaction[]>("http://localhost:8880/front/getListOfBooks?studentId=" + this.student.studentId);
+  }
+
+  viewWhichBookIsPopular(){
+    return this.http.get<CustomPopularityObject[]>("http://localhost:8880/front/viewPopularity");
   }
 
   errorHandler(error) {

@@ -50,4 +50,28 @@
     </table>
 </div>
 
+<div *ngIf=!noBooksFound><h2>Suggested Books....</h2></div>
+ <div *ngIf=noBooksFound><h2>Get Started By Searching for your favorite book!!</h2></div>
+ <div>
+  <table class="table table-bordered" *ngIf=!noBooksFound>
+      <tr><th>Book Id</th><th>Name</th><th>Genre</th><th>Author</th><th>Price</th><th>ISBN</th><th>Brief Description</th><th></th></tr>
+      <tr *ngFor="let b of interestedBooks">
+        <td>{{b.bookId}}</td>
+        <td>{{b.bookName}}</td>
+        <td>{{b.bookGenre}}</td>
+        <td>{{b.bookAuthor}}</td>
+        <td>{{b.bookPrice}}</td>
+        <td>{{b.isbn}}</td>
+        <td>{{b.bookDescription}}</td>
+        <!-- <td>{{b.dateOfIssue | date:'dd/MM/yyyy'}}</td>
+        <td>{{b.dateOfReturn | date:'dd/MM/yyyy'}}</td>
+        <td>{{b.amount}}</td> -->
+
+        <td class="GetBookButton"><button class="btn btn-success" (click)="getBook($event, b)">Get This Book</button></td>
+        <!-- <td><input type="text" [(ngModel)]=returnDate name="dor" class="form-control" placeholder="Enter return date(in dd-MM-yyyy)" required></td> -->
+      </tr>
+      <hr>
+    </table>
+</div>
+
 

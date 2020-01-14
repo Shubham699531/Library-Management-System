@@ -10,6 +10,7 @@ import javax.persistence.SequenceGenerator;
 @Entity
 @SequenceGenerator(name = "book_id_gen", sequenceName = "book_id_gen", allocationSize = 1)
 @NamedQuery(name = "findBookById", query = "FROM Book WHERE bookId =:bookId")
+@NamedQuery(name = "findAllBooks", query = "SELECT b FROM Book b")
 public class Book {
 
 	@Id

@@ -9,6 +9,7 @@ import { retry, catchError } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class LoginService {
+  isLoggedIn:boolean;
 
   constructor(private http:HttpClient) { }
 

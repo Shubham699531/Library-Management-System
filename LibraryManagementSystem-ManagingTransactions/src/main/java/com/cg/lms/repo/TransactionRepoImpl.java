@@ -5,9 +5,13 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
@@ -15,10 +19,12 @@ import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.transaction.Transactional;
 
+import org.apache.catalina.util.CustomObjectInputStream;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.cg.lms.dto.Book;
+import com.cg.lms.dto.CustomPopularityObject;
 import com.cg.lms.dto.Student;
 import com.cg.lms.dto.Transactions;
 import com.cg.lms.exception.BookAlreadyReturnedException;
@@ -29,6 +35,7 @@ import com.cg.lms.exception.SameBookAlreadyTakenException;
 @Transactional
 public class TransactionRepoImpl implements TransactionRepo {
 	static final int fixedDaysToReturnBook = 15;
+	Set<String> interests = new HashSet<String>();
 
 	@Autowired
 	private EntityManager mgr;
@@ -74,12 +81,15 @@ public class TransactionRepoImpl implements TransactionRepo {
 						transaction.setDateOfIssue(dateOfIssue);
 						StringBuilder sb = new StringBuilder();
 //						Adding interests in a set
-						Set<String> interests = new HashSet<String>();
-						interests.add(b.getBookGenre());
-						for(String interest: interests) {
-							sb.append(interest + " ");
-						}
-						s.setIntrests(sb.toString());
+//						interests.add(b.getBookGenre());
+//						System.out.println(interests);
+//						s.getIntrests().concat(b.getBookGenre());
+//						for(String interest: interests) {
+//							sb.append(interest + " ");
+//						}
+						s.setIntrests(s.getIntrests().concat(b.getBookGenre()));
+						System.out.println(s.getIntrests());
+//						s.setIntrests(sb.toString());
 //						if (s.getIntrests() != null) {
 //							// Appending interests of the student based on the books
 //							// he borrows, can be used in FRONT END for better results
@@ -112,7 +122,8 @@ public class TransactionRepoImpl implements TransactionRepo {
 					}
 				} else {
 					System.out.println("You already have taken this book.");
-					throw new SameBookAlreadyTakenException("You already have taken this book.");
+					throw new SameBookAlreadyTakenException("You already have taken this book. Kindly return to borrow"
+							+ "it again.");
 				}
 
 			} catch (NoResultException e) {
@@ -129,7 +140,7 @@ public class TransactionRepoImpl implements TransactionRepo {
 		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
 		Date returnDate = sdf.parse(rd);
 		try {
-			transaction = mgr.createNamedQuery("findTransactionByStudentAndBookId", Transactions.class)
+			transaction = mgr.createNamedQuery("getTransactionsForAStudentAndBook", Transactions.class)
 					.setParameter("studentId", studentId).setParameter("bookId", bookId).getSingleResult();
 
 			Date dateOfIssue = transaction.getDateOfIssue();
@@ -155,7 +166,6 @@ public class TransactionRepoImpl implements TransactionRepo {
 				transaction.setTransactionStatus("closed");
 				return mgr.merge(transaction);
 			} else {
-				System.out.println("Book already returned.");
 				throw new BookAlreadyReturnedException("Book has already been returned.");
 			}
 
@@ -193,12 +203,6 @@ public class TransactionRepoImpl implements TransactionRepo {
 		List<Transactions> listOfAllTransactions = mgr
 				.createNamedQuery("getListOfBooksTakenByStudent", Transactions.class)
 				.setParameter("studentId", studentId).getResultList();
-//		List<Book> listOfBooks = new ArrayList<>();
-//		
-//		//Getting list of books for a particular student
-//		for (Transactions txn : listOfAllTransactions) {
-//			listOfBooks.add(txn.getBook());
-//		}
 		return listOfAllTransactions;
 	}
 
@@ -207,18 +211,55 @@ public class TransactionRepoImpl implements TransactionRepo {
 		List<Transactions> listOfAllTransactions = mgr
 				.createNamedQuery("getListOfPeopleTakingABook", Transactions.class).setParameter("bookId", bookId)
 				.getResultList();
-//		List<Student> listOfStudents = new ArrayList<>();
-//		//Getting list of people taking a particular book, can be used to DEFINE POPULARITY OF BOOK
-//		//in frontend
-//		for (Transactions txn : listOfAllTransactions) {
-//			listOfStudents.add(txn.getStudent());
-//		}
+//		Getting list of people taking a particular book, can be used to DEFINE POPULARITY OF BOOK
+//		in frontend
 		return listOfAllTransactions;
 	}
 
 	@Override
 	public List<Transactions> listAllTransactions() {
 		return mgr.createNamedQuery("viewAllTransactions", Transactions.class).getResultList();
+	}
+
+//	@Override
+//	public LinkedHashMap<Book, Integer> viewPopularityOfBook() {
+//		List<Book> listOfAllBooks = mgr.createNamedQuery("findAllBooks", Book.class).getResultList();
+//		HashMap<Book, Integer> popularityTable = new HashMap<>();
+//		for(Book book : listOfAllBooks) {
+//			popularityTable.put(book, getListOfPeopleTakingABook(book.getBookId()).size());
+//		}
+//		LinkedHashMap<Book, Integer> sortedpopularityTable = new LinkedHashMap<>();
+//		popularityTable.entrySet().stream().sorted(Map.Entry.comparingByValue(Comparator.reverseOrder())).
+//		forEachOrdered(x-> sortedpopularityTable.put(x.getKey(), x.getValue()));
+//		
+//		return sortedpopularityTable;
+//	}
+	
+	@Override
+	public List<CustomPopularityObject> viewPopularityOfBook() {
+		List<Book> listOfAllBooks = mgr.createNamedQuery("findAllBooks", Book.class).getResultList();
+		List<CustomPopularityObject> list = new ArrayList<>();
+		for(Book book:listOfAllBooks) {
+			list.add(new CustomPopularityObject(book, 
+					getListOfPeopleTakingABook(book.getBookId()).size()));	
+		}
+		
+		 list.sort(new Comparator<CustomPopularityObject>() {
+
+			@Override
+			public int compare(CustomPopularityObject o1, CustomPopularityObject o2) {
+				if(o1.getCount()>o2.getCount()) {
+					return -1;
+				}
+				else if(o1.getCount()<o2.getCount()) {
+					return 1;
+				}
+				else {
+					return 0;
+				}
+			}
+		});
+		 return list;
 	}
 
 }

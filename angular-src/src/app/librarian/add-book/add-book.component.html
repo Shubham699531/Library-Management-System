@@ -22,7 +22,7 @@
     <form (ngSubmit)='addBook()' #addForm="ngForm">
       <div class="form-group">
         <label>Book Name</label><br>
-        <input type="text" [(ngModel)]=book.name name="name" placeholder="e.g. Sherlock Holmes" pattern="[a-zA-Z_ ]{5,50}"
+        <input type="text" [(ngModel)]=book.bookName name="name" placeholder="e.g. Sherlock Holmes" pattern="[a-zA-Z_ ]{5,50}"
           #name=ngModel class="form-control" required>
         <span *ngIf="name.touched && name.invalid && (name.errors.required || name.errors.pattern)"
           class="alert-warning">
@@ -58,7 +58,7 @@
 
       <div class="form-group">
         <label>Description</label><br>
-        <input type="text" [(ngModel)]=book.bookDescription name="description" class="form-control" placeholder="something awesome about the book" #description = ngModel pattern="[A-Za-z0-9. ]{8,500}" required>
+        <textarea type="text" [(ngModel)]=book.bookDescription name="description" class="form-control" placeholder="something awesome about the book" #description = ngModel pattern="[A-Za-z0-9., ]{8,}" required></textarea>
         <span *ngIf="description.touched && description.invalid && (description.errors.required || description.errors.pattern)"
           class="alert-warning">
           <p class="error-div" style="color:red " >Invalid Description. Grow up from <i>abcd</i></p></span>
