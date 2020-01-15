@@ -20,3 +20,7 @@ input[placeholder]{
 .password{
     color: aliceblue;
 }
+#rightAlign{
+    text-align:right;
+    /* vertical-align: middle; */
+}

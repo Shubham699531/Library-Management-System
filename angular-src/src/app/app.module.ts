@@ -17,6 +17,8 @@ import { LibrarianRegisterComponent } from './librarian/register/register.compon
 import { LibrarianDashboardComponent } from './librarian/dashboard/dashboard.component';
 import { AddBookComponent } from './librarian/add-book/add-book.component';
 import { HeaderComponent } from './header/header.component';
+import { StudentHeaderComponent } from './student/student-header/student-header.component';
+import { LibrarianHeaderComponent } from './librarian/librarian-header/librarian-header.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +34,9 @@ import { HeaderComponent } from './header/header.component';
     ListBooksComponent,
     TransactionsComponent,
     AddBookComponent,
-    HeaderComponent
+    HeaderComponent,
+    StudentHeaderComponent,
+    LibrarianHeaderComponent
   ],
   imports: [
     BrowserModule, FormsModule, HttpClientModule, NaviRoutingModule

@@ -16,9 +16,14 @@ export class AddBookComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.librarianService.isaddNewBookActive=true;
     if(this.librarianService.librarian.userName==undefined){
       this.router.navigate(['login']);
     }
+  }
+
+  ngOnDestroy(){
+    this.librarianService.isaddNewBookActive=false;
   }
 
   addBook(){

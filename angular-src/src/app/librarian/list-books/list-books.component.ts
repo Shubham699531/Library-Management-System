@@ -26,7 +26,8 @@ export class ListBooksComponent implements OnInit {
   }
 
   ngOnInit() {
-    if(this.librarianService.librarian.userName!=undefined){
+    this.librarianService.isviewBooksActive=true;
+    if(this.librarianService.librarian.userName!=undefined){ 
       this.librarianService.viewListOfBooks().subscribe(data=>{this.books=data;
         if(this.books.length==0){
           alert("No books yet!");
@@ -37,6 +38,10 @@ export class ListBooksComponent implements OnInit {
       this.router.navigate(['login']);
     }
     
+  }
+
+  ngOnDestroy(){
+    this.librarianService.isviewBooksActive=false;
   }
 
   viewWhoHasTakenThisBook(event, b){

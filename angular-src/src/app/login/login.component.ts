@@ -31,13 +31,13 @@ export class LoginComponent implements OnInit {
     this.service.verifyLogin(this.user).subscribe(data=>{this.login=data;
        if(this.login.librarian==null){
          this.studentService.student = this.login.student;
-         this.service.isLoggedIn=true;
+        //  this.studentService.isStudentLoggedIn=true;
         //  this.studentService.isStudentLoggedIn=true;
          this.router.navigate(['student-dashboard']);
        }
        else{
          this.librarianService.librarian = this.login.librarian;
-         this.service.isLoggedIn=true;
+        //  this.librarianService.isLibrarianLoggedIn=true;
         //  this.librarianService.isLibrarianLoggedIn=true;
          this.router.navigate(['librarian-dashboard']);
        }
@@ -46,4 +46,7 @@ export class LoginComponent implements OnInit {
     this.user= new User()})
   }
 
+  routeToSearchBook(){
+    this.router.navigate(['search-book']);
+  }
 }

@@ -40,6 +40,7 @@ export class StudentDashboardComponent implements OnInit {
     // this.minDate = new Date().toISOString().split('T')[0];
 
     if(this.studentService.student.userName!=undefined){
+      this.studentService.isDashboardActive=true;
        this.student = this.studentService.student;
        this.studentService.findBooksBasedOnInterest(this.student.intrests).subscribe(data=>{this.interestedBooks=data})
        if(this.interestedBooks.length!=0){
@@ -55,6 +56,10 @@ export class StudentDashboardComponent implements OnInit {
       this.router.navigate(['login']);
     }
     
+  }
+
+  ngOnDestroy(){
+    this.studentService.isDashboardActive=false;
   }
 
   onButtonClick(event, b) {

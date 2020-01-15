@@ -12,7 +12,11 @@ import { throwError } from 'rxjs';
 })
 export class ServiceLibrarianService {
   librarian:Librarian;
-  isLibrarianLoggedIn:boolean=false;
+  // isLibrarianLoggedIn:boolean=false;
+  isdashboardActive:boolean=false;
+  isaddNewBookActive:boolean=false;
+  isviewBooksActive:boolean=false;
+  isviewTransactionsActive:boolean=false;
 
   constructor(private http:HttpClient) { 
     this.librarian = new Librarian();

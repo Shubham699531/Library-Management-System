@@ -1,0 +1,24 @@
+<nav class="navbar navbar-inverse" style="margin: 0;">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a href="#" class="navbar-brand">LMS-Student-Portal!</a>
+    </div>
+  <ul class="nav navbar-nav">
+    <!-- <li ><a [routerLink]="['/login']">Login</a></li> -->
+     <li ><a [routerLink]="['/student-dashboard']">Student</a></li> 
+    <!-- <li ><a [routerLink]="['librarian-dashboard']">Librarian</a></li> -->
+     <!-- <li ><a [routerLink]="['/student-register']">Student Register</a></li>  -->
+    <!-- <li ><a [routerLink]="['librarian-register']">Librarian Register</a></li>  -->
+    <!-- <li ><a [routerLink]="['list-books']">List All Books</a></li> -->
+    <!-- <li ><a [routerLink]="['view-transactions']">List All Transactions</a></li> -->
+     <li ><a [routerLink]="['/search-book']">Search Books</a></li> 
+    <!-- <li class><a [routerLink]="['logout']">Logout</a></li> -->
+    
+   </ul>
+  <div class="logoutButton">
+  <ul class="nav navbar-nav navbar-right">
+    <button class="btn btn-warning" (click)="logout()">Logout</button>
+    </ul>
+  </div>
+  </div>
+ </nav>

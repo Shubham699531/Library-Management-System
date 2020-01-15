@@ -16,16 +16,17 @@ export class AppComponent {
     private router:Router){
 
   }
-  logout(){
-    if(this.studentService.student.userName!=undefined){
-      // this.studentHasLoggedIn=true;
-      this.studentService.student.userName=undefined;
-      this.router.navigate(['login']);
-    }
-    else if(this.librarianService.librarian.userName!=undefined){
-      // this.studentHasLoggedIn=true;
-      this.librarianService.librarian.userName=undefined;
-      this.router.navigate(['login']);
-    }
-  }
+  
+  // logout(){
+  //   if(this.studentService.student.userName!=undefined){
+  //     // this.studentHasLoggedIn=true;
+  //     this.studentService.student.userName=undefined;
+  //     this.router.navigate(['login']);
+  //   }
+  //   else if(this.librarianService.librarian.userName!=undefined){
+  //     // this.studentHasLoggedIn=true;
+  //     this.librarianService.librarian.userName=undefined;
+  //     this.router.navigate(['login']);
+  //   }
+  // }
 }

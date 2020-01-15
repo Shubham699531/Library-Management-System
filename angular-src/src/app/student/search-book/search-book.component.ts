@@ -25,8 +25,13 @@ export class SearchBookComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.studentService.isSearchBookActive=true;
     this.studentService.viewWhichBookIsPopular().subscribe(data=>{this.popularityObjects=data});
     this.studentService.searchForABook("").subscribe(data=>{this.books=data});
+   }
+
+   ngOnDestroy(){
+     this.studentService.isSearchBookActive=false;
    }
 
   onButtonClick(event, b) {

@@ -1,12 +1,13 @@
 import { Injectable } from '@angular/core';
 import { Student } from '../models/student.model';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Book } from '../models/book.model';
 import { Transaction } from '../models/transaction.model';
 import { Observable } from 'rxjs';
 import { throwError } from 'rxjs';
 import { retry, catchError } from 'rxjs/operators';
 import { CustomPopularityObject } from '../models/CustomPopularityObject.model';
+import { Constants } from '../models/constant.model';
 
 
 @Injectable({
@@ -17,7 +18,8 @@ export class ServiceStudentService {
   successfullyBorrowed:boolean=false;
   successfullyReturned:boolean=false;
   currentTransaction:Transaction;
-  isStudentLoggedIn:boolean=false;
+  isDashboardActive:boolean=false;
+  isSearchBookActive:boolean=false;
 
   constructor(private http:HttpClient) { 
     this.student= new Student();
@@ -25,36 +27,36 @@ export class ServiceStudentService {
   }
 
   registerStudent(newStudent:Student){
-    return this.http.post("http://localhost:8880/front/register", newStudent);
+    return this.http.post(Constants.HOME_URL + "/register", newStudent);
   }
 
   searchForABook(something:string){
-    return this.http.get<Book[]>("http://localhost:8880/front/search?something=" + something).pipe(retry(1), catchError(this.errorHandler));
+    return this.http.get<Book[]>(Constants.HOME_URL + "/search?something=" + something).pipe(retry(1), catchError(this.errorHandler));
   }
 
   borrowABook(bookId:number):Observable<Transaction>{
-    return this.http.get<Transaction>("http://localhost:8880/front/borrow?bookId=" + bookId +
+    return this.http.get<Transaction>(Constants.HOME_URL + "/borrow?bookId=" + bookId +
      "&studentId=" + this.student.studentId ).pipe(retry(1), catchError(this.errorHandler));
   }
 
   returnABook(studentId: number, bookId: number, returnDate: string){
-    return this.http.get<Transaction>("http://localhost:8880/front/return?studentId=" + studentId + "&bookId=" + bookId +  "&returnDate=" + returnDate);
+    return this.http.get<Transaction>(Constants.HOME_URL + "/return?studentId=" + studentId + "&bookId=" + bookId +  "&returnDate=" + returnDate);
   }
 
   findBooksBasedOnInterest(interest:string){
-    return this.http.get<Book[]>("http://localhost:8880/front/getBooksByInterests?interest=" + interest);
+    return this.http.get<Book[]>(Constants.HOME_URL + "/getBooksByInterests?interest=" + interest);
   }
 
   studentsTakingThisBook(bookId:number){
-    return this.http.get<Student[]>("http://localhost:8880/front/getListOfStudents?bookId="+ +bookId);
+    return this.http.get<Student[]>(Constants.HOME_URL + "/getListOfStudents?bookId="+ +bookId);
   }
 
   whichBooksTakenByMe(){
-    return this.http.get<Transaction[]>("http://localhost:8880/front/getListOfBooks?studentId=" + this.student.studentId);
+    return this.http.get<Transaction[]>(Constants.HOME_URL + "/getListOfBooks?studentId=" + this.student.studentId);
   }
 
   viewWhichBookIsPopular(){
-    return this.http.get<CustomPopularityObject[]>("http://localhost:8880/front/viewPopularity");
+    return this.http.get<CustomPopularityObject[]>(Constants.HOME_URL + "/viewPopularity");
   }
 
   errorHandler(error) {

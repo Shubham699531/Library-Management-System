@@ -16,14 +16,19 @@ export class LibrarianDashboardComponent implements OnInit {
    }
 
   ngOnInit() {
+    this.librarianService.isdashboardActive=true;
     if(this.librarianService.librarian.userName!=undefined){
       this.librarian= this.librarianService.librarian;
+      
     }
     else{
       this.router.navigate(['login']);
     }
     
   }
+  // ngOnDestroy(){
+  //   this.librarianService.isdashboardActive=false;
+  // }
 
   routeToAddBook(){
     this.router.navigate(['add-book']);

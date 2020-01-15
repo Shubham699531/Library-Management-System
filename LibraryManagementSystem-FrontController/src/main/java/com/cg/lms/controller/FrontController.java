@@ -1,13 +1,12 @@
 package com.cg.lms.controller;
 
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -39,6 +38,7 @@ import com.cg.lms.exception.SameBookAlreadyTakenException;
 @RequestMapping(value = "/front")
 @CrossOrigin(origins = "http://localhost:4200")
 public class FrontController {
+//	@Value("${front.ip}")
 	final String serverIp="localhost";
 	final String bookMicroserviceUrl="http://" + serverIp + ":8881/book";
 	final String transactionMicroserviceUrl="http://" + serverIp + ":8882/transaction";
