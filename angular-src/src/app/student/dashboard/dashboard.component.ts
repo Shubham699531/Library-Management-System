@@ -22,6 +22,7 @@ export class StudentDashboardComponent implements OnInit {
   interestedBooks:Book[]=[];
   // returnButtonClicked:boolean=false;
   returnDate:string;
+  errorMsg:string;
   i:number;
   // maxDate: string;
   // minDate: string;
@@ -88,6 +89,27 @@ export class StudentDashboardComponent implements OnInit {
 
   searchNewBooks(){
     this.router.navigate(['search-book']);
+  }
+
+  getBook(event, b) {
+    if (this.studentService.student.userName!=undefined) {
+      this.book = b;
+      this.studentService.borrowABook(+this.book.bookId).subscribe(data => {
+      this.transaction = data;
+        if (this.transaction != null) {
+          this.studentService.currentTransaction = this.transaction;
+          this.studentService.successfullyBorrowed = true;
+          this.router.navigate(['success-page']);
+        }
+        else{
+          this.router.navigate(['success-page']);
+        }
+      }, error=>{this.errorMsg=error;});
+    }
+    else {
+      this.router.navigate(['login']);
+    }
+
   }
 
 }

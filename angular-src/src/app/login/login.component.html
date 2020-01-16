@@ -22,7 +22,9 @@
                       <div class="form-group" >
                         <br>
                         <div class="row">
-                          <div class="col-xs-9"></div>
+                          <div class="col-xs-9" id="signupDiv">
+                            <h5 class="signuplink">New Here? Sign Up <br><br><a class="registerLink" [routerLink]="['/librarian-register']">Librarian Register</a><br>or<br> <a class="registerLink" [routerLink]="['/student-register']">Student Register</a></h5>
+                          </div>
                           <div class="col-xs-3">
                               <button class="btn btn-success" type="submit" [disabled]="!loginForm.valid">Login</button>
                             </div>

@@ -23,6 +23,7 @@ export class AddBookComponent implements OnInit {
   }
 
   ngOnDestroy(){
+    
     this.librarianService.isaddNewBookActive=false;
   }
 

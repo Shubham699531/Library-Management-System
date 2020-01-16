@@ -8,10 +8,14 @@ import { Router } from '@angular/router';
   styleUrls: ['./student-header.component.css']
 })
 export class StudentHeaderComponent implements OnInit {
+  isDashboardActive:boolean;
+  isSearchBookActive:boolean;
 
   constructor(private studentService:ServiceStudentService, private router:Router) { }
 
   ngOnInit() {
+    this.isDashboardActive = this.studentService.isDashboardActive;
+    this.isSearchBookActive = this.studentService.isSearchBookActive;
   }
 
   logout(){

@@ -35,5 +35,9 @@ export class LibrarianRegisterComponent implements OnInit {
       this.correct=true;
     }
   }
+  
+  goBackToLogin(){
+    this.router.navigate(['login']);
+  }
 
 }

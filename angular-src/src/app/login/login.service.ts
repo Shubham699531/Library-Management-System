@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { User } from '../models/user.model';
 import { CustomLoginObject } from '../models/CustomObjectForLogin.model';
-import { Observable, throwError } from 'rxjs';
+import { throwError } from 'rxjs';
 import { retry, catchError } from 'rxjs/operators';
+import { Constants } from '../models/constant.model';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +15,7 @@ export class LoginService {
   constructor(private http:HttpClient) { }
 
   verifyLogin(user:User){
-    return this.http.get<CustomLoginObject>("http://localhost:8880/front/validateLogin?userName=" 
+    return this.http.get<CustomLoginObject>(Constants.HOME_URL + "/validateLogin?userName=" 
     +user.userName + "&password=" + user.password).pipe(retry(1), catchError(this.errorHandler));
   }
 

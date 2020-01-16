@@ -16,11 +16,10 @@ export class LibrarianHeaderComponent implements OnInit {
   constructor(private librarianService:ServiceLibrarianService, private router:Router) { }
 
   ngOnInit() {
-    console.log("Header ngOnit Called.")
     this.isdashboardActive=this.librarianService.isdashboardActive;
     this.isaddNewBookActive=this.librarianService.isaddNewBookActive;
     this.isviewBooksActive=this.librarianService.isviewBooksActive;
-    this.isviewTransactionsActive=this.isviewTransactionsActive;
+    this.isviewTransactionsActive=this.librarianService.isviewTransactionsActive;
   }
 
   logout(){

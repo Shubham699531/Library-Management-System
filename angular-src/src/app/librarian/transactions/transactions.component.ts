@@ -14,7 +14,6 @@ export class TransactionsComponent implements OnInit,OnDestroy {
   constructor(private librarianService:ServiceLibrarianService, private router:Router) { }
 
   ngOnInit() {
-    console.log("Transaction On INit called")
     this.librarianService.isviewTransactionsActive=true;
     if(this.librarianService.librarian.userName!=undefined){ 
       // console.log(this.librarianService.librarian);
@@ -29,7 +28,6 @@ export class TransactionsComponent implements OnInit,OnDestroy {
   }
 
   ngOnDestroy(){
-    console.log("On Destroy called")
     this.librarianService.isviewTransactionsActive=false;
   }
 

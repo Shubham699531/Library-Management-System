@@ -5,13 +5,13 @@
     </div>
   <ul class="nav navbar-nav">
     <!-- <li ><a [routerLink]="['/login']">Login</a></li> -->
-     <li ><a [routerLink]="['/student-dashboard']">Student</a></li> 
+     <li ><a *ngIf=!isDashboardActive [routerLink]="['/student-dashboard']">My Dashboard</a></li> 
     <!-- <li ><a [routerLink]="['librarian-dashboard']">Librarian</a></li> -->
      <!-- <li ><a [routerLink]="['/student-register']">Student Register</a></li>  -->
     <!-- <li ><a [routerLink]="['librarian-register']">Librarian Register</a></li>  -->
     <!-- <li ><a [routerLink]="['list-books']">List All Books</a></li> -->
     <!-- <li ><a [routerLink]="['view-transactions']">List All Transactions</a></li> -->
-     <li ><a [routerLink]="['/search-book']">Search Books</a></li> 
+     <li ><a *ngIf=!isSearchBookActive [routerLink]="['/search-book']">Search Books</a></li> 
     <!-- <li class><a [routerLink]="['logout']">Logout</a></li> -->
     
    </ul>

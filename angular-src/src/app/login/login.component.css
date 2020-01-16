@@ -24,3 +24,16 @@ input[placeholder]{
     text-align:right;
     /* vertical-align: middle; */
 }
+
+.signuplink{
+    color: greenyellow;
+    font-size: 15px;
+}
+#signupDiv{
+    text-align: center;
+}
+
+.registerLink{
+    color: lightblue;
+    font-weight: bolder;
+}

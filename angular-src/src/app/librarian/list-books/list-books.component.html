@@ -1,7 +1,7 @@
 <app-librarian-header></app-librarian-header>
 <div *ngIf=!itemClicked>
   <table class="table table-bordered">
-    <tr><th colspan="5"></th><th colspan="2"><h1>List of Books</h1></th><th class="backButton" colspan="4"><button class="btn btn-success" name="backButton" (click)="goBack()">Go Back</button></th></tr>
+    <tr><th colspan="5"></th><th colspan="2"><h1>List of Books</h1></th></tr>
       <tr><th>Book Id</th><th>Name</th><th>Genre</th><th>Author</th><th>Price</th><th>ISBN</th><th>Brief Description</th><th>Copies Available</th><th>Status</th><th></th><th></th></tr>
       <tr *ngFor="let b of books">
         <td>{{b.bookId}}</td>
@@ -26,7 +26,7 @@
 
 <div *ngIf=itemClicked >
   <table class="table table-bordered">
-    <tr><th colspan="3"></th><th colspan="3"><h1>List of Students</h1></th><th class="backButton" colspan="3"><button class="btn btn-success" name="backButton" (click)="goBack()">Go Back</button></th></tr>
+    <tr><th colspan="3"></th><th colspan="3"><h1>List of Students</h1></th></tr>
       <tr><th>Student Id</th><th>Name</th><th>Contact No.</th><th>E-mail</th><th>Transaction Id</th><th>Date of Issue</th><th>Date of Return</th><th>Amount</th><th>Status</th></tr>
       <tr *ngFor="let s of transactions">
         <td>{{s.student.studentId}}</td>

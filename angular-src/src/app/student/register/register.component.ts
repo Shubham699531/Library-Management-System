@@ -36,4 +36,8 @@ export class StudentRegisterComponent implements OnInit {
     }
   }
 
+  goBackToLogin(){
+    this.router.navigate(['login']);
+  }
+
 }
